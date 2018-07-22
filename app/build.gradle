@@ -73,6 +73,7 @@ dependencies {
     //UI
     implementation libraries.constraintLayout
     implementation libraries.glide
+    implementation libraries.design
 
     //Network
     implementation libraries.retrofit
