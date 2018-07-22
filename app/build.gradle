@@ -1,15 +1,19 @@
+apply from: '../dependencies.gradle'
+
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
+apply plugin: 'kotlin-kapt'
+
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion versions.compileSdk
     defaultConfig {
         applicationId "com.leventime.qualificationproject"
-        minSdkVersion 19
-        targetSdkVersion 28
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -20,14 +24,54 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    kapt {
+        javacOptions {
+            // Increase the max count of errors from annotation processors.
+            // Default is 100.
+            option("-Xmaxerrs", 5000)
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:28.0.0-alpha3'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation libraries.kotlinStdLib
+
+    //Tests
+    testImplementation libraries.jUnit
+    androidTestImplementation libraries.testRunner
+    androidTestImplementation libraries.expressoCore
+    androidTestImplementation libraries.mockito
+
+    //Support
+    implementation libraries.appcompatV7
+
+    //UI
+    implementation libraries.constraintLayout
+    implementation libraries.glide
+
+    //Network
+    implementation libraries.retrofit
+    implementation libraries.retrofitConverterGson
+    implementation libraries.okhttp3
+    implementation libraries.okhttp3Logging
+
+    //RxJava
+    implementation libraries.rxjava2
+    implementation libraries.rxandroid
+    implementation libraries.rxbinding
+
+    //Dagger
+    implementation libraries.dagger
+    kapt libraries.daggerCompiler
+
+    //Database
+    implementation libraries.room
+    implementation libraries.roomRxJava2
+    kapt libraries.roomProcessor
+
+    //Utils
+    implementation libraries.butterknife
+    kapt libraries.butterknifeCompiler
 }
