@@ -15,13 +15,41 @@ android {
         minSdkVersion versions.minSdk
         targetSdkVersion versions.targetSdk
         versionCode 1
-        versionName "1.0"
+        versionName "1.0." + versionCode
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions{
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    flavorDimensions "app"
+
+    productFlavors{
+        prod{
+            dimension "app"
+            buildConfigField "String", 'BASE_URL', '"volkdoe4.beget.tech/"'
+            buildConfigField("long", "NETWORK_TIMEOUT_MILLIS", "10_000")
+            buildConfigField("long", "CONNECT_TIMEOUT_MILLIS", "30_000")
+            buildConfigField("int", "COUNT_RETRY_REQUEST", "3")
+        }
+
+        dev{
+            dimension "app"
+            versionNameSuffix "-dev"
+            buildConfigField "String", 'BASE_URL', '"volkdoe4.beget.tech/"'
+            buildConfigField("long", "NETWORK_TIMEOUT_MILLIS", "10_000")
+            buildConfigField("long", "CONNECT_TIMEOUT_MILLIS", "30_000")
+            buildConfigField("int", "COUNT_RETRY_REQUEST", "3")
         }
     }
 
@@ -50,6 +78,7 @@ dependencies {
     //UI
     implementation libraries.constraintLayout
     implementation libraries.glide
+    implementation libraries.design
 
     //Network
     implementation libraries.retrofit
@@ -61,6 +90,7 @@ dependencies {
     implementation libraries.rxjava2
     implementation libraries.rxandroid
     implementation libraries.rxbinding
+    implementation libraries.adapterRxJava
 
     //Dagger
     implementation libraries.dagger
@@ -73,5 +103,7 @@ dependencies {
 
     //Utils
     implementation libraries.butterknife
+    implementation libraries.butterknife
     kapt libraries.butterknifeCompiler
+    implementation libraries.timber
 }
