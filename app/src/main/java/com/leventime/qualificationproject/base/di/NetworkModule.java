@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import com.leventime.qualificationproject.BuildConfig;
 import com.leventime.qualificationproject.base.network.Api;
 import com.leventime.qualificationproject.base.network.ApiClient;
+import com.leventime.qualificationproject.base.network.exception.RxErrorHandlingCallAdapterFactory;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -57,6 +58,7 @@ public class NetworkModule{
         OkHttpClient okHttpClient = okBuilder.build();
         apiClient.getAdapterBuilder()
                 .baseUrl(mBaseUrl)
+                .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();

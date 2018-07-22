@@ -27,6 +27,11 @@ android {
         }
     }
 
+    compileOptions{
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
     flavorDimensions "app"
 
     productFlavors{
@@ -85,6 +90,7 @@ dependencies {
     implementation libraries.rxjava2
     implementation libraries.rxandroid
     implementation libraries.rxbinding
+    implementation libraries.adapterRxJava
 
     //Dagger
     implementation libraries.dagger
