@@ -84,5 +84,6 @@ ext.libraries = [
 
         //Utils
         butterknife          : "com.jakewharton:butterknife:$versions.butterknife",
-        butterknifeCompiler  : "com.jakewharton:butterknife-compiler:$versions.butterknife"
+        butterknifeCompiler  : "com.jakewharton:butterknife-compiler:$versions.butterknife",
+        timber               : "com.jakewharton.timber:timber:$versions.timber"
 ]
