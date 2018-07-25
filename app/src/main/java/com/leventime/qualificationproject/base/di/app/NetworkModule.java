@@ -1,4 +1,4 @@
-package com.leventime.qualificationproject.base.di;
+package com.leventime.qualificationproject.base.di.app;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

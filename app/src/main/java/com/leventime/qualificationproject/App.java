@@ -4,10 +4,10 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.leventime.qualificationproject.base.di.AppComponent;
-import com.leventime.qualificationproject.base.di.AppModule;
-import com.leventime.qualificationproject.base.di.DaggerAppComponent;
-import com.leventime.qualificationproject.base.di.NetworkModule;
+import com.leventime.qualificationproject.base.di.app.AppComponent;
+import com.leventime.qualificationproject.base.di.app.AppModule;
+import com.leventime.qualificationproject.base.di.app.DaggerAppComponent;
+import com.leventime.qualificationproject.base.di.app.NetworkModule;
 
 import timber.log.Timber;
 
