@@ -1,6 +1,7 @@
 package com.leventime.qualificationproject.features.login.presentation;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatButton;
@@ -39,6 +40,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
     TextInputLayout mTilPassword;
     @BindView(R.id.btnLogin)
     AppCompatButton mBtnLogin;
+    @Nullable
+    private Actions mListener;
 
     @Override
     protected void onCreate(@Nullable final Bundle aSavedInstanceState){
@@ -61,5 +64,30 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
     @Override
     protected BaseContract.Presenter getPresenter(){
         return mPresenter;
+    }
+
+    @Override
+    public void navigateToMainView(){
+
+    }
+
+    @Override
+    public void showLoadingProgress(){
+
+    }
+
+    @Override
+    public void hideLoadingProgress(){
+
+    }
+
+    @Override
+    public void showError(@NonNull final String aError){
+
+    }
+
+    @Override
+    public void setListener(@Nullable final Actions aListener){
+        mListener = aListener;
     }
 }

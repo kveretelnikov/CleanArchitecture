@@ -13,16 +13,16 @@ public interface BaseContract{
     /**
      * Presenter determines what view should do and proceed its input
      *
-     * @param <V> view
+     * @param <VIEW> view
      */
-    interface Presenter<V extends View>{
+    interface Presenter<VIEW extends View>{
 
         /**
          * Attach view
          *
          * @param aView view
          */
-        void attachView(@NonNull V aView);
+        void attachView(@NonNull VIEW aView);
 
         /**
          * Detach view
@@ -57,5 +57,25 @@ public interface BaseContract{
          * @return string resource
          */
         String getStringResource(@StringRes int aResourceId, @NonNull Object... aFormatArgs);
+    }
+
+    /**
+     * Page object
+     *
+     * @param <VIEW>
+     */
+    interface PageObject<VIEW extends View>{
+
+        /**
+         * Set view
+         *
+         * @param aView view
+         */
+        void setView(@NonNull VIEW aView);
+
+        /**
+         * Remove view
+         */
+        void removeView();
     }
 }

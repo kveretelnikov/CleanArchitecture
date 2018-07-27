@@ -15,10 +15,32 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
 
     private final LoginContract.Interactor mInteractor;
     private final LoginValidator mLoginValidator;
+    private final LoginContract.PageObject mLoginPageObject;
 
-    public LoginPresenter(@NonNull LoginContract.Interactor aInteractor, @NonNull LoginValidator aLoginValidator){
+    /**
+     * @param aInteractor interactor
+     * @param aLoginValidator login validator
+     * @param aLoginPageObject login page object
+     */
+    public LoginPresenter(@NonNull LoginContract.Interactor aInteractor,
+                          @NonNull LoginValidator aLoginValidator,
+                          @NonNull LoginContract.PageObject aLoginPageObject){
+        super(aLoginPageObject);
         mInteractor = aInteractor;
         mLoginValidator = aLoginValidator;
+        mLoginPageObject = aLoginPageObject;
+    }
+
+    @Override
+    public void attachView(@NonNull final LoginContract.View aView){
+        super.attachView(aView);
+        aView.setListener(this);
+    }
+
+    @Override
+    public void detachView(){
+        getView().setListener(null);
+        super.detachView();
     }
 
     @NonNull

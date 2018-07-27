@@ -13,17 +13,31 @@ import io.reactivex.disposables.Disposable;
  *
  * @author kv
  */
-public class BasePresenter<V extends BaseContract.View> implements BaseContract.Presenter<V>{
+public class BasePresenter<VIEW extends BaseContract.View> implements BaseContract.Presenter<VIEW>{
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
-    private V mView;
+    private BaseContract.PageObject<VIEW> mPageObject = null;
+    private VIEW mView;
+
+    /**
+     * @param aPageObject page object
+     */
+    public BasePresenter(@NonNull BaseContract.PageObject<VIEW> aPageObject){
+        mPageObject = aPageObject;
+    }
+
+    public BasePresenter(){
+    }
 
     @Override
-    public void attachView(@NonNull final V aView){
+    public void attachView(@NonNull final VIEW aView){
         mView = aView;
         if(mView instanceof BaseViewState.ProgressSupport){
             //Need to remove progress if the page has been recreated
-            ((BaseViewState.ProgressSupport) mView).hideProgress();
+            ((BaseViewState.ProgressSupport) mView).hideLoadingProgress();
+        }
+        if(mPageObject != null){
+            mPageObject.setView(aView);
         }
         onViewAttached();
     }
@@ -31,6 +45,9 @@ public class BasePresenter<V extends BaseContract.View> implements BaseContract.
     @Override
     public void detachView(){
         mView = null;
+        if(mPageObject != null){
+            mPageObject.removeView();
+        }
         mCompositeDisposable.clear();
     }
 
@@ -52,24 +69,8 @@ public class BasePresenter<V extends BaseContract.View> implements BaseContract.
      * @return
      */
     @Nullable
-    protected V getView(){
+    protected VIEW getView(){
         return mView;
-    }
-
-    /**
-     * Handle get error in rx operation
-     *
-     * @param aThrowable error
-     */
-    protected void handleGetErrorRxOperation(@NonNull Throwable aThrowable){
-        //Use when need, depends on realization
-    }
-
-    /**
-     * Handle get success in rx operation
-     */
-    protected void handleGetSuccessRxOperation(){
-        //Use when need, depends on realization
     }
 
     /**
