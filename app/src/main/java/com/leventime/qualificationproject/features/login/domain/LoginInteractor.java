@@ -17,6 +17,9 @@ public class LoginInteractor extends BaseInteractor<LoginContract.Repository> im
 
     LoginDomain mLoginDomain = new LoginDomain();
 
+    /**
+     * @param aRepository repository
+     */
     public LoginInteractor(@NonNull LoginContract.Repository aRepository){
         super(aRepository);
     }

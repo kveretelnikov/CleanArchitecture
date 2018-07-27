@@ -3,6 +3,7 @@ package com.leventime.qualificationproject.features.login.data;
 import android.support.annotation.NonNull;
 
 import com.leventime.qualificationproject.base.core.data.BaseRepository;
+import com.leventime.qualificationproject.base.resources.PreferenceManager;
 import com.leventime.qualificationproject.base.resources.ResourceManager;
 import com.leventime.qualificationproject.features.login.LoginContract;
 import com.leventime.qualificationproject.features.login.domain.LoginDomain;
@@ -20,9 +21,17 @@ import io.reactivex.Single;
 public class LoginRepository extends BaseRepository implements LoginContract.Repository{
 
     private final LoginApi mLoginApi;
+    private final PreferenceManager mPreferenceManager;
 
-    public LoginRepository(@NonNull final ResourceManager aResourceManager, @NonNull LoginApi aLoginApi){
+    /**
+     * @param aResourceManager resource manager
+     * @param aLoginApi login api
+     */
+    public LoginRepository(@NonNull final ResourceManager aResourceManager,
+                           @NonNull PreferenceManager aPreferenceManager,
+                           @NonNull LoginApi aLoginApi){
         super(aResourceManager);
+        mPreferenceManager = aPreferenceManager;
         mLoginApi = aLoginApi;
     }
 
@@ -35,7 +44,7 @@ public class LoginRepository extends BaseRepository implements LoginContract.Rep
 
     @Override
     public void saveToken(@NonNull final String aToken){
-
+        mPreferenceManager.saveToken(aToken);
     }
 
     @NonNull
@@ -47,11 +56,11 @@ public class LoginRepository extends BaseRepository implements LoginContract.Rep
 
     @Override
     public void saveUserInfo(@NonNull final UserInfoDomain aUserInfoDomain){
-
+        //TODO kv 28/07/18: need add save to db
     }
 
     @Override
     public void clearLoginData(){
-
+        mPreferenceManager.clearAll();
     }
 }
