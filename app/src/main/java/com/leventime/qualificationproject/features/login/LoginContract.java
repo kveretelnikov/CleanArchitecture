@@ -1,9 +1,14 @@
 package com.leventime.qualificationproject.features.login;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.leventime.qualificationproject.base.core.BaseContract;
 import com.leventime.qualificationproject.base.core.presentation.BaseViewState;
+import com.leventime.qualificationproject.features.login.domain.LoginDomain;
+import com.leventime.qualificationproject.features.login.presentation.LoginValidationErrors;
+
+import io.reactivex.Completable;
 
 /**
  * Manage login
@@ -24,6 +29,13 @@ public interface LoginContract{
          * Navigate to main view
          */
         void navigateToMainView();
+
+        /**
+         * Show validation errors
+         *
+         * @param aLoginValidationErrors login validation errors
+         */
+        void showValidationErrors(@NonNull LoginValidationErrors aLoginValidationErrors);
 
         /**
          * View generated actions
@@ -65,14 +77,43 @@ public interface LoginContract{
     /**
      * Login interactor
      */
-    interface Interactor{
+    interface Interactor extends BaseContract.Interactor{
 
+        /**
+         * Set email
+         *
+         * @param aEmail email
+         */
+        void setEmail(@Nullable String aEmail);
+
+        /**
+         * Set password
+         *
+         * @param aPassword password
+         */
+        void setPassword(@Nullable String aPassword);
+
+        /**
+         * Get login data
+         *
+         * @return login data
+         */
+        @NonNull
+        LoginDomain getLoginData();
+
+        /**
+         * Login
+         *
+         * @return success
+         */
+        @NonNull
+        Completable login();
     }
 
     /**
      * Login repository
      */
-    interface Repository{
+    interface Repository extends BaseContract.Repository{
 
     }
 
@@ -97,6 +138,13 @@ public interface LoginContract{
          * @param aThrowable error
          */
         void showError(@NonNull Throwable aThrowable);
+
+        /**
+         * Show validation errors
+         *
+         * @param aLoginValidationErrors login validation errors
+         */
+        void showValidationErrors(@NonNull LoginValidationErrors aLoginValidationErrors);
 
         /**
          * Navigate to main view

@@ -34,6 +34,11 @@ public class LoginPageObject extends BasePageObject<LoginContract.View> implemen
     }
 
     @Override
+    public void showValidationErrors(@NonNull final LoginValidationErrors aLoginValidationErrors){
+
+    }
+
+    @Override
     public void navigateToMainView(){
         if(isViewShown()){
             getView().navigateToMainView();

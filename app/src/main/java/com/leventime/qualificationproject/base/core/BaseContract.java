@@ -60,6 +60,21 @@ public interface BaseContract{
     }
 
     /**
+     * Interactor
+     */
+    interface Interactor{
+
+        /**
+         * Get string resource
+         *
+         * @param aResourceId resource id
+         * @param aFormatArgs format args
+         * @return string resource
+         */
+        String getStringResource(@StringRes int aResourceId, @NonNull Object... aFormatArgs);
+    }
+
+    /**
      * Page object
      *
      * @param <VIEW>

@@ -72,6 +72,11 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
     }
 
     @Override
+    public void showValidationErrors(@NonNull final LoginValidationErrors aLoginValidationErrors){
+
+    }
+
+    @Override
     public void showLoadingProgress(){
 
     }

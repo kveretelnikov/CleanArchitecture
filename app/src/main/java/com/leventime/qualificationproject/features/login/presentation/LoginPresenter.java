@@ -2,9 +2,15 @@ package com.leventime.qualificationproject.features.login.presentation;
 
 import android.support.annotation.NonNull;
 
+import com.leventime.qualificationproject.R;
 import com.leventime.qualificationproject.base.core.presentation.BasePresenter;
 import com.leventime.qualificationproject.features.login.LoginContract;
+import com.leventime.qualificationproject.features.login.domain.LoginDomain;
 import com.leventime.qualificationproject.util.Strings;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Manage login in app
@@ -46,6 +52,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
     @NonNull
     @Override
     public String onEmailChanged(@NonNull final String aEmail){
+        mInteractor.setEmail(aEmail);
         if(mLoginValidator.validateLoginPassword(aEmail)){
             return Strings.EMPTY;
         } else{
@@ -56,6 +63,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
     @NonNull
     @Override
     public String onPasswordChanged(@NonNull final String aPassword){
+        mInteractor.setPassword(aPassword);
         if(mLoginValidator.validateLoginPassword(aPassword)){
             return Strings.EMPTY;
         } else{
@@ -65,6 +73,33 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
 
     @Override
     public void onLoginClicked(){
+        LoginValidationErrors validationResult = getValidationResult();
+        if(validationResult.hasErrors()){
+            mLoginPageObject.showValidationErrors(validationResult);
+        } else{
+            Disposable disposable = mInteractor.login()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnSubscribe(aDisposable -> mLoginPageObject.showLoadingProgress())
+                    .doFinally(mLoginPageObject::hideLoadingProgress)
+                    .subscribe(mLoginPageObject::navigateToMainView, mLoginPageObject::showError);
+            addToDispose(disposable);
+        }
+    }
 
+    /**
+     * Get validation result
+     *
+     * @return validation result
+     */
+    @NonNull
+    private LoginValidationErrors getValidationResult(){
+        LoginDomain loginData = mInteractor.getLoginData();
+        LoginValidationErrors loginValidationErrors = new LoginValidationErrors();
+        String emailError = mLoginValidator.validateLoginEmail(loginData.getEmail()) ? null : mInteractor.getStringResource(R.string.error_login_email_validate);
+        String passwordError = mLoginValidator.validateLoginPassword(loginData.getPassword()) ? null : mInteractor.getStringResource(R.string.error_login_password_validate);
+        loginValidationErrors.setEmailError(emailError);
+        loginValidationErrors.setPasswordError(passwordError);
+        return loginValidationErrors;
     }
 }
