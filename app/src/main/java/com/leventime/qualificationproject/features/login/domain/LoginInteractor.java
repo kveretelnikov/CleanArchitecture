@@ -40,7 +40,14 @@ public class LoginInteractor extends BaseInteractor<LoginContract.Repository> im
     @NonNull
     @Override
     public Completable login(){
-        return null;
+        return mRepository.login(mLoginDomain)
+                .doOnSuccess(aLoginResponseDomain -> mRepository.saveToken(aLoginResponseDomain.getToken()))
+                .flatMap(aLoginResponseDomain -> mRepository.getUserInfo())
+                .doOnSuccess(mRepository::saveUserInfo)
+                .doOnError(aThrowable -> {
+                    mRepository.clearLoginData();
+                })
+                .toCompletable();
     }
 
 }

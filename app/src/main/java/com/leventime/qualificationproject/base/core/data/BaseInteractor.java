@@ -11,7 +11,7 @@ import com.leventime.qualificationproject.base.core.BaseContract;
  */
 public class BaseInteractor<REPOSITORY extends BaseContract.Repository> implements BaseContract.Interactor{
 
-    private final BaseContract.Repository mRepository;
+    protected final REPOSITORY mRepository;
 
     /**
      * @param aRepository repository

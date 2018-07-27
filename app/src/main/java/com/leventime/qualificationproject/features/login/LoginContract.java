@@ -6,9 +6,12 @@ import android.support.annotation.Nullable;
 import com.leventime.qualificationproject.base.core.BaseContract;
 import com.leventime.qualificationproject.base.core.presentation.BaseViewState;
 import com.leventime.qualificationproject.features.login.domain.LoginDomain;
+import com.leventime.qualificationproject.features.login.domain.LoginResponseDomain;
+import com.leventime.qualificationproject.features.login.domain.UserInfoDomain;
 import com.leventime.qualificationproject.features.login.presentation.LoginValidationErrors;
 
 import io.reactivex.Completable;
+import io.reactivex.Single;
 
 /**
  * Manage login
@@ -115,6 +118,41 @@ public interface LoginContract{
      */
     interface Repository extends BaseContract.Repository{
 
+        /**
+         * Login
+         *
+         * @param aLoginDomain login data
+         * @return token
+         */
+        @NonNull
+        Single<LoginResponseDomain> login(@NonNull LoginDomain aLoginDomain);
+
+        /**
+         * Save token
+         *
+         * @param aToken token
+         */
+        void saveToken(@NonNull String aToken);
+
+        /**
+         * Get user info
+         *
+         * @return user info
+         */
+        @NonNull
+        Single<UserInfoDomain> getUserInfo();
+
+        /**
+         * Save user info
+         *
+         * @param aUserInfoDomain user nfo
+         */
+        void saveUserInfo(@NonNull UserInfoDomain aUserInfoDomain);
+
+        /**
+         * Clear login data
+         */
+        void clearLoginData();
     }
 
     /**

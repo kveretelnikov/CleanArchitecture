@@ -4,9 +4,9 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.leventime.qualificationproject.BuildConfig;
-import com.leventime.qualificationproject.base.network.Api;
 import com.leventime.qualificationproject.base.network.ApiClient;
 import com.leventime.qualificationproject.base.network.exception.RxErrorHandlingCallAdapterFactory;
+import com.leventime.qualificationproject.features.login.data.LoginApi;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -81,8 +81,8 @@ public class NetworkModule{
     @Provides
     @Singleton
     @NonNull
-    Api api(@Named("apiClient") @NonNull ApiClient aClient){
-        return aClient.createApi(Api.class);
+    LoginApi loginApi(@NonNull ApiClient aClient){
+        return aClient.createApi(LoginApi.class);
     }
 
 }
