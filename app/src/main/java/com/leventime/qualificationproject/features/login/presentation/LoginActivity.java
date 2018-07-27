@@ -2,6 +2,10 @@ package com.leventime.qualificationproject.features.login.presentation;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.Toolbar;
 
 import com.leventime.qualificationproject.App;
 import com.leventime.qualificationproject.R;
@@ -12,6 +16,8 @@ import com.leventime.qualificationproject.features.login.LoginContract;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+
 /**
  * Show login
  *
@@ -21,6 +27,18 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
 
     @Inject
     LoginContract.Presenter mPresenter;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.etEmailLogin)
+    AppCompatEditText mEtEmail;
+    @BindView(R.id.tilEmailLogin)
+    TextInputLayout mTilEmail;
+    @BindView(R.id.etPasswordLogin)
+    AppCompatEditText mEtPassword;
+    @BindView(R.id.tilPasswordLogin)
+    TextInputLayout mTilPassword;
+    @BindView(R.id.btnLogin)
+    AppCompatButton mBtnLogin;
 
     @Override
     protected void onCreate(@Nullable final Bundle aSavedInstanceState){

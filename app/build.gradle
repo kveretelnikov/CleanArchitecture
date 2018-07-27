@@ -37,7 +37,7 @@ android {
     productFlavors{
         prod{
             dimension "app"
-            buildConfigField "String", 'BASE_URL', '"volkdoe4.beget.tech/"'
+            buildConfigField "String", 'BASE_URL', '"https://volkdoe4.beget.tech/"'
             buildConfigField("long", "NETWORK_TIMEOUT_MILLIS", "10_000")
             buildConfigField("long", "CONNECT_TIMEOUT_MILLIS", "30_000")
             buildConfigField("int", "COUNT_RETRY_REQUEST", "3")
@@ -46,7 +46,7 @@ android {
         dev{
             dimension "app"
             versionNameSuffix "-dev"
-            buildConfigField "String", 'BASE_URL', '"volkdoe4.beget.tech/"'
+            buildConfigField "String", 'BASE_URL', '"https://volkdoe4.beget.tech/"'
             buildConfigField("long", "NETWORK_TIMEOUT_MILLIS", "10_000")
             buildConfigField("long", "CONNECT_TIMEOUT_MILLIS", "30_000")
             buildConfigField("int", "COUNT_RETRY_REQUEST", "3")
