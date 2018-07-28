@@ -158,24 +158,7 @@ public interface LoginContract{
     /**
      * Login page object
      */
-    interface PageObject extends BaseContract.PageObject<View>{
-
-        /**
-         * Show loading progress
-         */
-        void showLoadingProgress();
-
-        /**
-         * Hide loading progress
-         */
-        void hideLoadingProgress();
-
-        /**
-         * Show error
-         *
-         * @param aError error
-         */
-        void showError(@NonNull String aError);
+    interface PageObject extends BaseContract.PageObject<View>, BaseViewState.ProgressSupport, BaseViewState.ErrorsSupport{
 
         /**
          * Show validation errors

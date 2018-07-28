@@ -1,5 +1,7 @@
 package com.leventime.qualificationproject.features.login.presentation;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +18,7 @@ import com.leventime.qualificationproject.base.core.BaseContract;
 import com.leventime.qualificationproject.base.core.presentation.BaseActivity;
 import com.leventime.qualificationproject.base.di.features.login.LoginModule;
 import com.leventime.qualificationproject.features.login.LoginContract;
+import com.leventime.qualificationproject.features.main.presentation.MainActivity;
 import com.leventime.qualificationproject.util.Strings;
 import com.leventime.qualificationproject.util.Views;
 import com.leventime.qualificationproject.views.ProgressDialog;
@@ -51,6 +54,18 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
     private Actions mListener;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout mCoordinatorLayout;
+
+    /**
+     * Create intent to start {@link LoginActivity}
+     *
+     * @param aContext android context
+     * @return intent
+     */
+    @NonNull
+    public static Intent getStartIntent(@NonNull final Context aContext){
+        return new Intent(aContext, LoginActivity.class);
+    }
+
 
     @Override
     protected void onCreate(@Nullable final Bundle aSavedInstanceState){
@@ -93,7 +108,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
 
     @Override
     public void navigateToMainView(){
-
+        startActivity(MainActivity.getStartIntent(this));
+        finish();
     }
 
     @Override
@@ -144,6 +160,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(aError -> setValidationError(mTilPassword, aError), this::handleValidationError)
         );
+        configureToolbar(mToolbar, getString(R.string.login_title), false);
     }
 
     /**

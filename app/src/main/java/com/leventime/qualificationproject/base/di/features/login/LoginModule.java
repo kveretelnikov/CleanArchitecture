@@ -28,14 +28,14 @@ public class LoginModule{
     @LoginScope
     @Provides
     @NonNull
-    LoginValidator providesLoginValidator(){
+    LoginValidator providesValidator(){
         return new Validator();
     }
 
     @LoginScope
     @Provides
     @NonNull
-    LoginContract.PageObject providesLoginPageObject(){
+    LoginContract.PageObject providesPageObject(){
         return new LoginPageObject();
     }
 
