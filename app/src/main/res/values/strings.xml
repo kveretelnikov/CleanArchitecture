@@ -4,6 +4,7 @@
     <!--Errors-->
     <string name="error_login_email_validate">Email specified is not correct</string>
     <string name="error_login_password_validate">Password can not be empty</string>
+    <string name="error_network">Bad connection</string>
 
     <!--Login-->
     <string name="login_title">Login</string>
@@ -11,5 +12,7 @@
     <string name="login_et_password_hint">Password</string>
     <string name="login_btn_login">Login</string>
 
+    <!--Progress-->
+    <string name="progress_loading">Loading…</string>
 
 </resources>

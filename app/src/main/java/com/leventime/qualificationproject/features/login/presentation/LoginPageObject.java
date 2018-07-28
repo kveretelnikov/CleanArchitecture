@@ -27,15 +27,17 @@ public class LoginPageObject extends BasePageObject<LoginContract.View> implemen
     }
 
     @Override
-    public void showError(@NonNull final Throwable aThrowable){
+    public void showError(@NonNull final String aError){
         if(isViewShown()){
-            getView().showError(aThrowable.getLocalizedMessage());
+            getView().showError(aError);
         }
     }
 
     @Override
     public void showValidationErrors(@NonNull final LoginValidationErrors aLoginValidationErrors){
-
+        if(isViewShown()){
+            getView().showValidationErrors(aLoginValidationErrors);
+        }
     }
 
     @Override

@@ -173,9 +173,9 @@ public interface LoginContract{
         /**
          * Show error
          *
-         * @param aThrowable error
+         * @param aError error
          */
-        void showError(@NonNull Throwable aThrowable);
+        void showError(@NonNull String aError);
 
         /**
          * Show validation errors

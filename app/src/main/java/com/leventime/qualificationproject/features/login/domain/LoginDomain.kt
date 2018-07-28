@@ -3,6 +3,8 @@ package com.leventime.qualificationproject.features.login.domain
 /**
  * Describe login data
  *
+ * @param email email
+ * @param password
  * @author kv
  */
 data class LoginDomain(var email: String? = null,

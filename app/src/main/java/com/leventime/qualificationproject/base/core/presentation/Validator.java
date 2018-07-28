@@ -2,10 +2,9 @@ package com.leventime.qualificationproject.base.core.presentation;
 
 import android.support.annotation.Nullable;
 
+import com.google.common.base.Strings;
 import com.leventime.qualificationproject.features.login.presentation.LoginValidator;
 import com.leventime.qualificationproject.util.Patterns;
-
-import kotlin.text.StringsKt;
 
 /**
  * Manage validation in app
@@ -21,6 +20,6 @@ public class Validator implements LoginValidator{
 
     @Override
     public boolean validateLoginPassword(@Nullable final String aPassword){
-        return !StringsKt.isBlank(aPassword);
+        return !Strings.isNullOrEmpty(aPassword);
     }
 }

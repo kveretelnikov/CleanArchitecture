@@ -2,15 +2,18 @@ package com.leventime.qualificationproject.features.login.presentation;
 
 import android.support.annotation.NonNull;
 
+import com.leventime.qualificationproject.BuildConfig;
 import com.leventime.qualificationproject.R;
 import com.leventime.qualificationproject.base.core.presentation.BasePresenter;
 import com.leventime.qualificationproject.features.login.LoginContract;
 import com.leventime.qualificationproject.features.login.domain.LoginDomain;
+import com.leventime.qualificationproject.util.Errors;
 import com.leventime.qualificationproject.util.Strings;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Manage login in app
@@ -53,10 +56,10 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
     @Override
     public String onEmailChanged(@NonNull final String aEmail){
         mInteractor.setEmail(aEmail);
-        if(mLoginValidator.validateLoginPassword(aEmail)){
+        if(mLoginValidator.validateLoginEmail(aEmail)){
             return Strings.EMPTY;
         } else{
-            return Strings.EMPTY;
+            return mInteractor.getStringResource(R.string.error_login_email_validate);
         }
     }
 
@@ -67,7 +70,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
         if(mLoginValidator.validateLoginPassword(aPassword)){
             return Strings.EMPTY;
         } else{
-            return Strings.EMPTY;
+            return mInteractor.getStringResource(R.string.error_login_password_validate);
         }
     }
 
@@ -78,11 +81,15 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
             mLoginPageObject.showValidationErrors(validationResult);
         } else{
             Disposable disposable = mInteractor.login()
+                    .retry(BuildConfig.COUNT_RETRY_REQUEST)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnSubscribe(aDisposable -> mLoginPageObject.showLoadingProgress())
                     .doFinally(mLoginPageObject::hideLoadingProgress)
-                    .subscribe(mLoginPageObject::navigateToMainView, mLoginPageObject::showError);
+                    .subscribe(mLoginPageObject::navigateToMainView, aThrowable -> {
+                        Timber.e(aThrowable);
+                        mLoginPageObject.showError(Errors.getErrorMessage(aThrowable, mInteractor.getStringResource(R.string.error_network)));
+                    });
             addToDispose(disposable);
         }
     }

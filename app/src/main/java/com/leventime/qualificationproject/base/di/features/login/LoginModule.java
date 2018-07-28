@@ -2,10 +2,11 @@ package com.leventime.qualificationproject.base.di.features.login;
 
 import android.support.annotation.NonNull;
 
+import com.leventime.qualificationproject.api.AuthApi;
 import com.leventime.qualificationproject.base.core.presentation.Validator;
+import com.leventime.qualificationproject.base.resources.PreferenceManager;
 import com.leventime.qualificationproject.base.resources.ResourceManager;
 import com.leventime.qualificationproject.features.login.LoginContract;
-import com.leventime.qualificationproject.features.login.data.LoginApi;
 import com.leventime.qualificationproject.features.login.data.LoginRepository;
 import com.leventime.qualificationproject.features.login.domain.LoginInteractor;
 import com.leventime.qualificationproject.features.login.presentation.LoginPageObject;
@@ -56,8 +57,8 @@ public class LoginModule{
     @LoginScope
     @Provides
     @NonNull
-    LoginContract.Repository providesRepository(@NonNull ResourceManager aResourceManager, @NonNull LoginApi aApi){
-        return new LoginRepository(aResourceManager, aApi);
+    LoginContract.Repository providesRepository(@NonNull ResourceManager aResourceManager, @NonNull PreferenceManager aPreferenceManager, @NonNull AuthApi aApi){
+        return new LoginRepository(aResourceManager, aPreferenceManager, aApi);
     }
 
 }

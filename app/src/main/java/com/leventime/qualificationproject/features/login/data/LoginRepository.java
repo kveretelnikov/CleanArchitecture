@@ -2,6 +2,7 @@ package com.leventime.qualificationproject.features.login.data;
 
 import android.support.annotation.NonNull;
 
+import com.leventime.qualificationproject.api.AuthApi;
 import com.leventime.qualificationproject.base.core.data.BaseRepository;
 import com.leventime.qualificationproject.base.resources.PreferenceManager;
 import com.leventime.qualificationproject.base.resources.ResourceManager;
@@ -20,7 +21,7 @@ import io.reactivex.Single;
  */
 public class LoginRepository extends BaseRepository implements LoginContract.Repository{
 
-    private final LoginApi mLoginApi;
+    private final AuthApi mAuthApi;
     private final PreferenceManager mPreferenceManager;
 
     /**
@@ -29,16 +30,16 @@ public class LoginRepository extends BaseRepository implements LoginContract.Rep
      */
     public LoginRepository(@NonNull final ResourceManager aResourceManager,
                            @NonNull PreferenceManager aPreferenceManager,
-                           @NonNull LoginApi aLoginApi){
+                           @NonNull AuthApi aLoginApi){
         super(aResourceManager);
         mPreferenceManager = aPreferenceManager;
-        mLoginApi = aLoginApi;
+        mAuthApi = aLoginApi;
     }
 
     @NonNull
     @Override
     public Single<LoginResponseDomain> login(@NonNull final LoginDomain aLoginDomain){
-        return mLoginApi.login(LoginDomainMapper.mapLoginToEntity(aLoginDomain))
+        return mAuthApi.login(LoginDomainMapper.mapLoginToEntity(aLoginDomain))
                 .map(LoginDomainMapper::mapLoginResponseFromEntity);
     }
 
@@ -50,7 +51,7 @@ public class LoginRepository extends BaseRepository implements LoginContract.Rep
     @NonNull
     @Override
     public Single<UserInfoDomain> getUserInfo(){
-        return mLoginApi.getUserInfo()
+        return mAuthApi.getUserInfo()
                 .map(LoginDomainMapper::mapUserInfoFromEntity);
     }
 

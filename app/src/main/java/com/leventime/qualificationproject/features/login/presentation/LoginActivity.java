@@ -3,21 +3,29 @@ package com.leventime.qualificationproject.features.login.presentation;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 
+import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.leventime.qualificationproject.App;
 import com.leventime.qualificationproject.R;
 import com.leventime.qualificationproject.base.core.BaseContract;
 import com.leventime.qualificationproject.base.core.presentation.BaseActivity;
 import com.leventime.qualificationproject.base.di.features.login.LoginModule;
 import com.leventime.qualificationproject.features.login.LoginContract;
+import com.leventime.qualificationproject.util.Strings;
+import com.leventime.qualificationproject.util.Views;
+import com.leventime.qualificationproject.views.ProgressDialog;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import timber.log.Timber;
 
 /**
  * Show login
@@ -38,10 +46,11 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
     AppCompatEditText mEtPassword;
     @BindView(R.id.tilPasswordLogin)
     TextInputLayout mTilPassword;
-    @BindView(R.id.btnLogin)
-    AppCompatButton mBtnLogin;
+    private static final int SKIP_COUNT = 1;
     @Nullable
     private Actions mListener;
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout mCoordinatorLayout;
 
     @Override
     protected void onCreate(@Nullable final Bundle aSavedInstanceState){
@@ -51,8 +60,24 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
                 .loginModule(new LoginModule())
                 .build()
                 .inject(this);
+        initViews();
         mPresenter.attachView(this);
+    }
 
+    @Override
+    public void showValidationErrors(@NonNull final LoginValidationErrors aLoginValidationErrors){
+        setValidationError(mTilEmail, aLoginValidationErrors.getEmailError());
+        setValidationError(mTilPassword, aLoginValidationErrors.getPasswordError());
+    }
+
+    @Override
+    public void showLoadingProgress(){
+        ProgressDialog.showDialog(getSupportFragmentManager());
+    }
+
+    @Override
+    public void hideLoadingProgress(){
+        ProgressDialog.hideDialog(getSupportFragmentManager());
     }
 
     @Override
@@ -72,27 +97,80 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
     }
 
     @Override
-    public void showValidationErrors(@NonNull final LoginValidationErrors aLoginValidationErrors){
-
-    }
-
-    @Override
-    public void showLoadingProgress(){
-
-    }
-
-    @Override
-    public void hideLoadingProgress(){
-
-    }
-
-    @Override
     public void showError(@NonNull final String aError){
+        Views.showErrorSnackbar(this, mCoordinatorLayout, aError);
+    }
 
+    /**
+     * Handle click on login
+     */
+    @OnClick(R.id.btnLogin)
+    public void onLoginClicked(){
+        if(mListener != null){
+            mListener.onLoginClicked();
+        }
+    }
+
+    /**
+     * Init views
+     */
+    private void initViews(){
+        disposeOnDestroy(
+                RxTextView.textChanges(mEtEmail)
+                        .skip(SKIP_COUNT)
+                        .map(CharSequence::toString)
+                        .map(aEmail -> {
+                            if(mListener != null){
+                                return mListener.onEmailChanged(aEmail);
+                            } else{
+                                return Strings.EMPTY;
+                            }
+                        })
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(aError -> setValidationError(mTilEmail, aError), this::handleValidationError),
+
+                RxTextView.textChanges(mEtPassword)
+                        .skip(SKIP_COUNT)
+                        .map(CharSequence::toString)
+                        .map(aPassword -> {
+                            if(mListener != null){
+                                return mListener.onPasswordChanged(aPassword);
+                            } else{
+                                return Strings.EMPTY;
+                            }
+                        })
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(aError -> setValidationError(mTilPassword, aError), this::handleValidationError)
+        );
+    }
+
+    /**
+     * Handle validation error
+     *
+     * @param aThrowable error
+     */
+    private void handleValidationError(@NonNull Throwable aThrowable){
+        Timber.e(aThrowable);
+        showError(aThrowable.getLocalizedMessage());
     }
 
     @Override
     public void setListener(@Nullable final Actions aListener){
         mListener = aListener;
+    }
+
+    /**
+     * Set validation error
+     *
+     * @param aTextInputLayout view
+     * @param aError error message
+     */
+    private void setValidationError(@NonNull TextInputLayout aTextInputLayout, @Nullable String aError){
+        aTextInputLayout.setErrorEnabled(!TextUtils.isEmpty(aError));
+        if(!TextUtils.isEmpty(aError)){
+            aTextInputLayout.setError(aError);
+        }
     }
 }
