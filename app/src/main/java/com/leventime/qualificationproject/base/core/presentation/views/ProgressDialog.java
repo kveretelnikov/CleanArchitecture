@@ -1,4 +1,4 @@
-package com.leventime.qualificationproject.views;
+package com.leventime.qualificationproject.base.core.presentation.views;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
