@@ -44,7 +44,7 @@ public final class NetworkUtil{
             RetrofitException retrofitException = (RetrofitException) aThrowable;
             if(retrofitException.getKind() == RetrofitException.Kind.HTTP){
                 ApiError apiError = retrofitException.convertTo(ApiError.class);
-                return apiError.getMessage();
+                return apiError != null ? apiError.getMessage() : aError;
             } else{
                 return aError;
             }
