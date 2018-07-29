@@ -8,6 +8,6 @@ import com.google.gson.annotations.SerializedName
  * @author kv
  */
 class LoginResponseEntity(
-        @SerializedName("token")
+        @SerializedName("key")
         var token: String
 )
