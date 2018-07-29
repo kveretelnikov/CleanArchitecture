@@ -14,7 +14,7 @@ import static android.content.Context.MODE_PRIVATE;
  *
  * @author kv
  */
-public final class PreferenceManager{
+public class PreferenceManager{
 
     private static final String PREF_TOKEN = "token";
     private SharedPreferences mPreference;

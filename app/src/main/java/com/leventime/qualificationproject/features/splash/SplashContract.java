@@ -3,7 +3,6 @@ package com.leventime.qualificationproject.features.splash;
 import android.support.annotation.NonNull;
 
 import com.leventime.qualificationproject.base.core.BaseContract;
-import com.leventime.qualificationproject.base.core.presentation.BaseViewState;
 
 import io.reactivex.Single;
 
@@ -17,7 +16,7 @@ public interface SplashContract{
     /**
      * Splash view
      */
-    interface View extends BaseContract.View, BaseViewState.ErrorsSupport{
+    interface View extends BaseContract.View{
 
         /**
          * Navigate to main view
@@ -67,7 +66,7 @@ public interface SplashContract{
     /**
      * Splash page object
      */
-    interface PageObject extends BaseContract.PageObject<View>, BaseViewState.ErrorsSupport{
+    interface PageObject extends BaseContract.PageObject<View>{
 
         /**
          * Navigate to main view

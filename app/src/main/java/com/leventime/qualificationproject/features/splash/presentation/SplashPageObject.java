@@ -1,7 +1,5 @@
 package com.leventime.qualificationproject.features.splash.presentation;
 
-import android.support.annotation.NonNull;
-
 import com.leventime.qualificationproject.base.core.presentation.BasePageObject;
 import com.leventime.qualificationproject.features.splash.SplashContract;
 
@@ -23,13 +21,6 @@ public class SplashPageObject extends BasePageObject<SplashContract.View> implem
     public void navigateToLoginView(){
         if(isViewShown()){
             getView().navigateToLoginView();
-        }
-    }
-
-    @Override
-    public void showError(@NonNull final String aError){
-        if(isViewShown()){
-            getView().showError(aError);
         }
     }
 }

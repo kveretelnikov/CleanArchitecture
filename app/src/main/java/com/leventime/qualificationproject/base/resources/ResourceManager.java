@@ -12,7 +12,7 @@ import javax.inject.Inject;
  *
  * @author kv
  */
-public final class ResourceManager{
+public class ResourceManager{
 
     private final Context mContext;
 

@@ -68,9 +68,9 @@ dependencies {
 
     //Tests
     testImplementation libraries.jUnit
+    testImplementation libraries.mockito
     androidTestImplementation libraries.testRunner
     androidTestImplementation libraries.expressoCore
-    androidTestImplementation libraries.mockito
 
     //Support
     implementation libraries.appcompatV7

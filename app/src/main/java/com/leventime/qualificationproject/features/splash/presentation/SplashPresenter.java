@@ -8,6 +8,7 @@ import com.leventime.qualificationproject.features.splash.SplashContract;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * Manage first navigation in app
@@ -41,7 +42,7 @@ public class SplashPresenter extends BasePresenter<SplashContract.View> implemen
                     } else{
                         mPageObject.navigateToLoginView();
                     }
-                }, aThrowable -> mPageObject.showError(aThrowable.getLocalizedMessage()));
+                }, Timber::e);
         addToDispose(disposable);
     }
 }
