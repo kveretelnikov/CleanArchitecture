@@ -6,11 +6,12 @@ import com.leventime.qualificationproject.api.AuthApi;
 import com.leventime.qualificationproject.base.core.presentation.Validator;
 import com.leventime.qualificationproject.base.resources.PreferenceManager;
 import com.leventime.qualificationproject.base.resources.ResourceManager;
-import com.leventime.qualificationproject.features.login.LoginContract;
 import com.leventime.qualificationproject.features.login.data.LoginRepository;
+import com.leventime.qualificationproject.features.login.data.LoginRepositoryImpl;
 import com.leventime.qualificationproject.features.login.domain.LoginInteractor;
-import com.leventime.qualificationproject.features.login.presentation.LoginPageObject;
+import com.leventime.qualificationproject.features.login.domain.LoginInteractorImpl;
 import com.leventime.qualificationproject.features.login.presentation.LoginPresenter;
+import com.leventime.qualificationproject.features.login.presentation.LoginPresenterImpl;
 import com.leventime.qualificationproject.features.login.presentation.LoginValidator;
 
 import dagger.Module;
@@ -35,30 +36,22 @@ public class LoginModule{
     @LoginScope
     @Provides
     @NonNull
-    LoginContract.PageObject providesPageObject(){
-        return new LoginPageObject();
+    LoginPresenter providesPresenter(@NonNull LoginInteractor aInteractor, @NonNull LoginValidator aValidator){
+        return new LoginPresenterImpl(aInteractor, aValidator);
     }
 
     @LoginScope
     @Provides
     @NonNull
-    LoginContract.Presenter providesPresenter(@NonNull LoginContract.Interactor aInteractor, @NonNull LoginValidator aValidator,
-                                              @NonNull LoginContract.PageObject aLoginPageObject){
-        return new LoginPresenter(aInteractor, aValidator, aLoginPageObject);
+    LoginInteractor providesInteractor(@NonNull LoginRepository aRepository){
+        return new LoginInteractorImpl(aRepository);
     }
 
     @LoginScope
     @Provides
     @NonNull
-    LoginContract.Interactor providesInteractor(@NonNull LoginContract.Repository aRepository){
-        return new LoginInteractor(aRepository);
-    }
-
-    @LoginScope
-    @Provides
-    @NonNull
-    LoginContract.Repository providesRepository(@NonNull ResourceManager aResourceManager, @NonNull PreferenceManager aPreferenceManager, @NonNull AuthApi aApi){
-        return new LoginRepository(aResourceManager, aPreferenceManager, aApi);
+    LoginRepository providesRepository(@NonNull ResourceManager aResourceManager, @NonNull PreferenceManager aPreferenceManager, @NonNull AuthApi aApi){
+        return new LoginRepositoryImpl(aResourceManager, aPreferenceManager, aApi);
     }
 
 }

@@ -1,22 +1,22 @@
-package com.leventime.qualificationproject.base.core.data;
+package com.leventime.qualificationproject.base.core.domain;
 
 import android.support.annotation.NonNull;
 
-import com.leventime.qualificationproject.base.core.BaseContract;
+import com.leventime.qualificationproject.base.core.data.BaseRepository;
 
 /**
  * Provide base data
  *
  * @author kv
  */
-public class BaseInteractor<REPOSITORY extends BaseContract.Repository> implements BaseContract.Interactor{
+public class BaseInteractorImpl<REPOSITORY extends BaseRepository> implements BaseInteractor{
 
     protected final REPOSITORY mRepository;
 
     /**
      * @param aRepository repository
      */
-    public BaseInteractor(@NonNull REPOSITORY aRepository){
+    public BaseInteractorImpl(@NonNull REPOSITORY aRepository){
         mRepository = aRepository;
     }
 

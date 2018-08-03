@@ -1,14 +1,14 @@
-package com.leventime.qualificationproject.base.core.data;
+package com.leventime.qualificationproject.base.core.domain;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 
 /**
- * Base repository
+ * Base interactor
  *
  * @author kv
  */
-public interface BaseRepository{
+public interface BaseInteractor{
 
     /**
      * Get string resource

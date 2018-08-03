@@ -14,11 +14,10 @@ import android.text.TextUtils;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.leventime.qualificationproject.App;
 import com.leventime.qualificationproject.R;
-import com.leventime.qualificationproject.base.core.BaseContract;
 import com.leventime.qualificationproject.base.core.presentation.BaseActivity;
+import com.leventime.qualificationproject.base.core.presentation.BasePresenter;
 import com.leventime.qualificationproject.base.core.presentation.views.ProgressDialog;
 import com.leventime.qualificationproject.base.di.features.login.LoginModule;
-import com.leventime.qualificationproject.features.login.LoginContract;
 import com.leventime.qualificationproject.features.main.presentation.MainActivity;
 import com.leventime.qualificationproject.util.Strings;
 import com.leventime.qualificationproject.util.Views;
@@ -35,10 +34,10 @@ import timber.log.Timber;
  *
  * @author kv
  */
-public class LoginActivity extends BaseActivity implements LoginContract.View{
+public class LoginActivity extends BaseActivity implements LoginView{
 
     @Inject
-    LoginContract.Presenter mPresenter;
+    LoginPresenter mPresenter;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.etEmailLogin)
@@ -102,7 +101,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View{
 
     @Nullable
     @Override
-    protected BaseContract.Presenter getPresenter(){
+    protected BasePresenter getPresenter(){
         return mPresenter;
     }
 

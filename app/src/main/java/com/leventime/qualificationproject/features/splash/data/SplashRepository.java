@@ -2,30 +2,20 @@ package com.leventime.qualificationproject.features.splash.data;
 
 import android.support.annotation.NonNull;
 
-import com.google.common.base.Strings;
-import com.leventime.qualificationproject.base.resources.PreferenceManager;
-import com.leventime.qualificationproject.features.splash.SplashContract;
-
 import io.reactivex.Single;
 
 /**
- * Splash repository
+ * Provide splash data
  *
  * @author kv
  */
-public class SplashRepository implements SplashContract.Repository{
-
-    private final PreferenceManager mPreferenceManager;
+public interface SplashRepository{
 
     /**
-     * @param aPreferenceManager preference manager
+     * Check that user logged
+     *
+     * @return true if user logged
      */
-    public SplashRepository(@NonNull PreferenceManager aPreferenceManager){
-        mPreferenceManager = aPreferenceManager;
-    }
-
-    @Override
-    public Single<Boolean> isUserLogged(){
-        return Single.fromCallable(() -> !Strings.isNullOrEmpty(mPreferenceManager.getToken()));
-    }
+    @NonNull
+    Single<Boolean> isUserLogged();
 }

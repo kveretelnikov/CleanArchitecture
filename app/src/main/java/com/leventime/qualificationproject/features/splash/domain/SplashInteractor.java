@@ -2,8 +2,6 @@ package com.leventime.qualificationproject.features.splash.domain;
 
 import android.support.annotation.NonNull;
 
-import com.leventime.qualificationproject.features.splash.SplashContract;
-
 import io.reactivex.Single;
 
 /**
@@ -11,20 +9,13 @@ import io.reactivex.Single;
  *
  * @author kv
  */
-public class SplashInteractor implements SplashContract.Interactor{
-
-    private final SplashContract.Repository mRepository;
+public interface SplashInteractor{
 
     /**
-     * @param aRepository repository
+     * Check that user logged
+     *
+     * @return true if user logged
      */
-    public SplashInteractor(@NonNull SplashContract.Repository aRepository){
-        mRepository = aRepository;
-    }
-
     @NonNull
-    @Override
-    public Single<Boolean> isUserLogged(){
-        return mRepository.isUserLogged();
-    }
+    Single<Boolean> isUserLogged();
 }

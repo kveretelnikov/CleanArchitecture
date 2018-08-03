@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.leventime.qualificationproject.R;
-import com.leventime.qualificationproject.base.core.BaseContract;
 import com.leventime.qualificationproject.base.core.presentation.BaseActivity;
+import com.leventime.qualificationproject.base.core.presentation.BasePresenter;
 
 /**
  * Show main
@@ -34,7 +34,7 @@ public class MainActivity extends BaseActivity{
 
     @Nullable
     @Override
-    protected BaseContract.Presenter getPresenter(){
+    protected BasePresenter getPresenter(){
         return null;
     }
 }

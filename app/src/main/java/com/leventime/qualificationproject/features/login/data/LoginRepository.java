@@ -2,13 +2,8 @@ package com.leventime.qualificationproject.features.login.data;
 
 import android.support.annotation.NonNull;
 
-import com.leventime.qualificationproject.api.AuthApi;
 import com.leventime.qualificationproject.base.core.data.BaseRepository;
-import com.leventime.qualificationproject.base.resources.PreferenceManager;
-import com.leventime.qualificationproject.base.resources.ResourceManager;
-import com.leventime.qualificationproject.features.login.LoginContract;
 import com.leventime.qualificationproject.features.login.domain.LoginDomain;
-import com.leventime.qualificationproject.features.login.domain.LoginDomainMapper;
 import com.leventime.qualificationproject.features.login.domain.LoginResponseDomain;
 import com.leventime.qualificationproject.features.login.domain.UserInfoDomain;
 
@@ -19,49 +14,41 @@ import io.reactivex.Single;
  *
  * @author kv
  */
-public class LoginRepository extends BaseRepository implements LoginContract.Repository{
-
-    private final AuthApi mAuthApi;
-    private final PreferenceManager mPreferenceManager;
+public interface LoginRepository extends BaseRepository{
 
     /**
-     * @param aResourceManager resource manager
-     * @param aLoginApi login api
+     * Login
+     *
+     * @param aLoginDomain login data
+     * @return token
      */
-    public LoginRepository(@NonNull final ResourceManager aResourceManager,
-                           @NonNull PreferenceManager aPreferenceManager,
-                           @NonNull AuthApi aLoginApi){
-        super(aResourceManager);
-        mPreferenceManager = aPreferenceManager;
-        mAuthApi = aLoginApi;
-    }
-
     @NonNull
-    @Override
-    public Single<LoginResponseDomain> login(@NonNull final LoginDomain aLoginDomain){
-        return mAuthApi.login(LoginDomainMapper.mapLoginToEntity(aLoginDomain))
-                .map(LoginDomainMapper::mapLoginResponseFromEntity);
-    }
+    Single<LoginResponseDomain> login(@NonNull LoginDomain aLoginDomain);
 
-    @Override
-    public void saveToken(@NonNull final String aToken){
-        mPreferenceManager.saveToken(aToken);
-    }
+    /**
+     * Save token
+     *
+     * @param aToken token
+     */
+    void saveToken(@NonNull String aToken);
 
+    /**
+     * Get user info
+     *
+     * @return user info
+     */
     @NonNull
-    @Override
-    public Single<UserInfoDomain> getUserInfo(){
-        return mAuthApi.getUserInfo()
-                .map(LoginDomainMapper::mapUserInfoFromEntity);
-    }
+    Single<UserInfoDomain> getUserInfo();
 
-    @Override
-    public void saveUserInfo(@NonNull final UserInfoDomain aUserInfoDomain){
-        //TODO kv 28/07/18: need add save to db
-    }
+    /**
+     * Save user info
+     *
+     * @param aUserInfoDomain user nfo
+     */
+    void saveUserInfo(@NonNull UserInfoDomain aUserInfoDomain);
 
-    @Override
-    public void clearLoginData(){
-        mPreferenceManager.clearAll();
-    }
+    /**
+     * Clear login data
+     */
+    void clearLoginData();
 }

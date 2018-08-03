@@ -5,12 +5,11 @@ import android.support.annotation.Nullable;
 
 import com.leventime.qualificationproject.App;
 import com.leventime.qualificationproject.R;
-import com.leventime.qualificationproject.base.core.BaseContract;
 import com.leventime.qualificationproject.base.core.presentation.BaseActivity;
+import com.leventime.qualificationproject.base.core.presentation.BasePresenter;
 import com.leventime.qualificationproject.base.di.features.splash.SplashModule;
 import com.leventime.qualificationproject.features.login.presentation.LoginActivity;
 import com.leventime.qualificationproject.features.main.presentation.MainActivity;
-import com.leventime.qualificationproject.features.splash.SplashContract;
 
 import javax.inject.Inject;
 
@@ -19,10 +18,10 @@ import javax.inject.Inject;
  *
  * @author kv
  */
-public class SplashActivity extends BaseActivity implements SplashContract.View{
+public class SplashActivity extends BaseActivity implements SplashView{
 
     @Inject
-    SplashContract.Presenter mPresenter;
+    SplashPresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable final Bundle aSavedInstanceState){
@@ -42,7 +41,7 @@ public class SplashActivity extends BaseActivity implements SplashContract.View{
 
     @Nullable
     @Override
-    protected BaseContract.Presenter getPresenter(){
+    protected BasePresenter getPresenter(){
         return mPresenter;
     }
 

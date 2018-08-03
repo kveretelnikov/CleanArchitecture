@@ -27,7 +27,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Test {@link LoginPresenter}
+ * Test {@link LoginPresenterImpl}
  *
  * @author kv
  */
@@ -44,12 +44,12 @@ public class LoginPresenterTest{
     @Mock
     LoginContract.PageObject mPageObject;
     private final LoginValidator mValidator = new Validator();
-    private LoginPresenter mPresenter;
+    private LoginPresenterImpl mPresenter;
 
     @Before
     public void setUp(){
         when(mInteractor.getStringResource(anyInt())).thenReturn(ERROR_MESSAGE);
-        mPresenter = new LoginPresenter(mInteractor, mValidator, mPageObject);
+        mPresenter = new LoginPresenterImpl(mInteractor, mValidator, mPageObject);
         mPresenter.attachView(mView);
         reset(mView);
     }

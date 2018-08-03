@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Test {@link LoginRepository}
+ * Test {@link LoginRepositoryImpl}
  *
  * @author kv
  */
@@ -34,11 +34,11 @@ public class LoginRepositoryTest{
     @Mock
     AuthApi mApi;
 
-    private LoginRepository mRepository;
+    private LoginRepositoryImpl mRepository;
 
     @Before
     public void setUp() throws Exception{
-        mRepository = new LoginRepository(mResourceManager, mPreferenceManager, mApi);
+        mRepository = new LoginRepositoryImpl(mResourceManager, mPreferenceManager, mApi);
     }
 
     @Test

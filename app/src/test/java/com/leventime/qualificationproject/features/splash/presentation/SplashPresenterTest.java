@@ -19,7 +19,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Test {@link SplashPresenter}
+ * Test {@link SplashPresenterImpl}
  *
  * @author kv
  */
@@ -36,12 +36,12 @@ public class SplashPresenterTest{
     @Mock
     SplashPageObject mPageObject;
 
-    SplashPresenter mPresenter;
+    SplashPresenterImpl mPresenter;
 
     @Before
     public void setUp(){
         when(mInteractor.isUserLogged()).thenReturn(Single.just(false));
-        mPresenter = new SplashPresenter(mPageObject, mInteractor);
+        mPresenter = new SplashPresenterImpl(mPageObject, mInteractor);
         reset(mView);
     }
 

@@ -11,7 +11,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static org.mockito.Mockito.verify;
 
 /**
- * Test {@link SplashRepository}
+ * Test {@link SplashRepositoryImpl}
  *
  * @author kv
  */
@@ -21,11 +21,11 @@ public class SplashRepositoryTest{
     @Mock
     PreferenceManager mPreferenceManager;
 
-    SplashRepository mRepository;
+    SplashRepositoryImpl mRepository;
 
     @Before
     public void setUp() throws Exception{
-        mRepository = new SplashRepository(mPreferenceManager);
+        mRepository = new SplashRepositoryImpl(mPreferenceManager);
     }
 
     @Test

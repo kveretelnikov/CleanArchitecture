@@ -3,8 +3,7 @@ package com.leventime.qualificationproject.features.login.domain;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.leventime.qualificationproject.base.core.data.BaseInteractor;
-import com.leventime.qualificationproject.features.login.LoginContract;
+import com.leventime.qualificationproject.base.core.domain.BaseInteractor;
 
 import io.reactivex.Completable;
 
@@ -13,44 +12,35 @@ import io.reactivex.Completable;
  *
  * @author kv
  */
-public class LoginInteractor extends BaseInteractor<LoginContract.Repository> implements LoginContract.Interactor{
-
-    LoginDomain mLoginDomain = new LoginDomain();
+public interface LoginInteractor extends BaseInteractor{
 
     /**
-     * @param aRepository repository
+     * Set email
+     *
+     * @param aEmail email
      */
-    public LoginInteractor(@NonNull LoginContract.Repository aRepository){
-        super(aRepository);
-    }
+    void setEmail(@Nullable String aEmail);
 
-    @Override
-    public void setEmail(@Nullable final String aEmail){
-        mLoginDomain.setEmail(aEmail);
-    }
+    /**
+     * Set password
+     *
+     * @param aPassword password
+     */
+    void setPassword(@Nullable String aPassword);
 
-    @Override
-    public void setPassword(@Nullable final String aPassword){
-        mLoginDomain.setPassword(aPassword);
-    }
-
+    /**
+     * Get login data
+     *
+     * @return login data
+     */
     @NonNull
-    @Override
-    public LoginDomain getLoginData(){
-        return mLoginDomain.makeCopy(mLoginDomain);
-    }
+    LoginDomain getLoginData();
 
+    /**
+     * Login
+     *
+     * @return success
+     */
     @NonNull
-    @Override
-    public Completable login(){
-        return mRepository.login(mLoginDomain)
-                .doOnSuccess(aLoginResponseDomain -> mRepository.saveToken(aLoginResponseDomain.getToken()))
-                .flatMap(aLoginResponseDomain -> mRepository.getUserInfo())
-                .doOnSuccess(mRepository::saveUserInfo)
-                .doOnError(aThrowable -> {
-                    mRepository.clearLoginData();
-                })
-                .toCompletable();
-    }
-
+    Completable login();
 }

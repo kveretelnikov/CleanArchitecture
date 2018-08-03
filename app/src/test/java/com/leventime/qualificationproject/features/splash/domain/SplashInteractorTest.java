@@ -14,7 +14,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Test {@link SplashInteractor}
+ * Test {@link SplashInteractorImpl}
  *
  * @author kv
  */
@@ -24,11 +24,11 @@ public class SplashInteractorTest{
     @Mock
     SplashContract.Repository mRepository;
 
-    SplashInteractor mInteractor;
+    SplashInteractorImpl mInteractor;
 
     @Before
     public void setUp() throws Exception{
-        mInteractor = new SplashInteractor(mRepository);
+        mInteractor = new SplashInteractorImpl(mRepository);
     }
 
     @Test
