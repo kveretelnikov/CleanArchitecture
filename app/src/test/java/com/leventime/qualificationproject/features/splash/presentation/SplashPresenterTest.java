@@ -1,6 +1,6 @@
 package com.leventime.qualificationproject.features.splash.presentation;
 
-import com.leventime.qualificationproject.features.splash.SplashContract;
+import com.leventime.qualificationproject.features.splash.domain.SplashInteractor;
 import com.leventime.qualificationproject.util.RxSchedulerRule;
 
 import org.junit.After;
@@ -30,18 +30,16 @@ public class SplashPresenterTest{
     public final RxSchedulerRule mOverrideSchedulersRule = new RxSchedulerRule();
 
     @Mock
-    SplashContract.View mView;
+    SplashView mView;
     @Mock
-    SplashContract.Interactor mInteractor;
-    @Mock
-    SplashPageObject mPageObject;
+    SplashInteractor mInteractor;
 
     SplashPresenterImpl mPresenter;
 
     @Before
     public void setUp(){
         when(mInteractor.isUserLogged()).thenReturn(Single.just(false));
-        mPresenter = new SplashPresenterImpl(mPageObject, mInteractor);
+        mPresenter = new SplashPresenterImpl(mInteractor);
         reset(mView);
     }
 
@@ -54,23 +52,23 @@ public class SplashPresenterTest{
     public void onViewAttachedNavigateToMainVIew(){
         when(mInteractor.isUserLogged()).thenReturn(Single.just(true));
         mPresenter.attachView(mView);
-        verify(mPageObject).navigateToMainView();
-        verify(mPageObject, never()).navigateToLoginView();
+        verify(mView).navigateToMainView();
+        verify(mView, never()).navigateToLoginView();
     }
 
     @Test
     public void onViewAttachedNavigateToLoginVIew(){
         when(mInteractor.isUserLogged()).thenReturn(Single.just(false));
         mPresenter.attachView(mView);
-        verify(mPageObject).navigateToLoginView();
-        verify(mPageObject, never()).navigateToMainView();
+        verify(mView).navigateToLoginView();
+        verify(mView, never()).navigateToMainView();
     }
 
     @Test
     public void onViewAttachedFail(){
         when(mInteractor.isUserLogged()).thenReturn(Single.error(new Exception()));
         mPresenter.attachView(mView);
-        verify(mPageObject, never()).navigateToLoginView();
-        verify(mPageObject, never()).navigateToMainView();
+        verify(mView, never()).navigateToLoginView();
+        verify(mView, never()).navigateToMainView();
     }
 }

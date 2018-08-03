@@ -1,6 +1,6 @@
 package com.leventime.qualificationproject.features.login.domain;
 
-import com.leventime.qualificationproject.features.login.LoginContract;
+import com.leventime.qualificationproject.features.login.data.LoginRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,13 +26,13 @@ import static org.mockito.Mockito.when;
 public class LoginInteractorTest{
 
     @Mock
-    LoginContract.Repository mRepository;
+    LoginRepository mRepository;
 
     LoginInteractor mInteractor;
 
     @Before
     public void setUp() throws Exception{
-        mInteractor = new LoginInteractor(mRepository);
+        mInteractor = new LoginInteractorImpl(mRepository);
     }
 
     @Test

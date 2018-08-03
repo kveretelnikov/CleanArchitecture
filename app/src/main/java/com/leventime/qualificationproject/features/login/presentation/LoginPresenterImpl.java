@@ -100,7 +100,6 @@ public class LoginPresenterImpl extends BasePresenterImpl<LoginView> implements 
 
     @Override
     public void login(){
-        getView().showLoadingProgress();
         Disposable disposable = mInteractor.login()
                 .retry(BuildConfig.COUNT_RETRY_REQUEST)
                 .subscribeOn(Schedulers.io())

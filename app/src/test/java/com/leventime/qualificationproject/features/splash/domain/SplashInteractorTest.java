@@ -1,6 +1,6 @@
 package com.leventime.qualificationproject.features.splash.domain;
 
-import com.leventime.qualificationproject.features.splash.SplashContract;
+import com.leventime.qualificationproject.features.splash.data.SplashRepository;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 public class SplashInteractorTest{
 
     @Mock
-    SplashContract.Repository mRepository;
+    SplashRepository mRepository;
 
     SplashInteractorImpl mInteractor;
 
