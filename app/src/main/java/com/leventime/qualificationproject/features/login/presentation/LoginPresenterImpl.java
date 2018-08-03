@@ -31,6 +31,7 @@ public class LoginPresenterImpl extends BasePresenterImpl<LoginView> implements 
      */
     public LoginPresenterImpl(@NonNull LoginInteractor aInteractor,
                               @NonNull LoginValidator aLoginValidator){
+        super(LoginView.EMPTY);
         mInteractor = aInteractor;
         mLoginValidator = aLoginValidator;
     }

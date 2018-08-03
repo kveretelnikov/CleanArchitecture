@@ -10,6 +10,22 @@ import com.leventime.qualificationproject.base.core.presentation.BaseView;
 public interface SplashView extends BaseView{
 
     /**
+     * Empty splash view
+     */
+    SplashView EMPTY = new SplashView(){
+
+        @Override
+        public void navigateToMainView(){
+
+        }
+
+        @Override
+        public void navigateToLoginView(){
+
+        }
+    };
+
+    /**
      * Navigate to main view
      */
     void navigateToMainView();

@@ -1,7 +1,6 @@
 package com.leventime.qualificationproject.base.core.presentation;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -14,7 +13,19 @@ import io.reactivex.disposables.Disposable;
 public class BasePresenterImpl<VIEW extends BaseView> implements BasePresenter<VIEW>{
 
     private final CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+    private final VIEW mEmptyView;
     private VIEW mView;
+
+    /**
+     * @param aEmptyView empty view
+     */
+    public BasePresenterImpl(@NonNull final VIEW aEmptyView){
+        if(aEmptyView == null){
+            throw new RuntimeException("View can not be empty");
+        }
+        mEmptyView = aEmptyView;
+        mView = aEmptyView;
+    }
 
     @Override
     public void attachView(@NonNull final VIEW aView){
@@ -28,7 +39,7 @@ public class BasePresenterImpl<VIEW extends BaseView> implements BasePresenter<V
 
     @Override
     public void detachView(){
-        mView = null;
+        mView = mEmptyView;
         mCompositeDisposable.clear();
     }
 
@@ -49,7 +60,7 @@ public class BasePresenterImpl<VIEW extends BaseView> implements BasePresenter<V
      *
      * @return view
      */
-    @Nullable
+    @NonNull
     protected VIEW getView(){
         return mView;
     }

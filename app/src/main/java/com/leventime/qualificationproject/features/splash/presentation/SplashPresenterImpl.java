@@ -23,6 +23,7 @@ public class SplashPresenterImpl extends BasePresenterImpl<SplashView> implement
      * @param aInteractor interactor
      */
     public SplashPresenterImpl(@NonNull SplashInteractor aInteractor){
+        super(SplashView.EMPTY);
         mInteractor = aInteractor;
     }
 
