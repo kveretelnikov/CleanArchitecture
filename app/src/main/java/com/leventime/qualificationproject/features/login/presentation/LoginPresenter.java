@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.leventime.qualificationproject.base.core.presentation.BasePresenter;
 import com.leventime.qualificationproject.features.login.presentation.states.LoginBaseState;
+import com.leventime.qualificationproject.features.login.presentation.states.LoginOwner;
 
 /**
  *
@@ -11,7 +12,7 @@ import com.leventime.qualificationproject.features.login.presentation.states.Log
  *
  * @author kv
  */
-public interface LoginPresenter extends BasePresenter<LoginView>, LoginView.Actions{
+public interface LoginPresenter extends BasePresenter<LoginView>, LoginView.Actions, LoginOwner{
 
     /**
      * Get state type

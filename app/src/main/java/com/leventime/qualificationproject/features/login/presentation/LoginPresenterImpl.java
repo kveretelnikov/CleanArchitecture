@@ -11,7 +11,6 @@ import com.leventime.qualificationproject.features.login.domain.LoginInteractor;
 import com.leventime.qualificationproject.features.login.presentation.states.LoginBaseState;
 import com.leventime.qualificationproject.features.login.presentation.states.LoginCompleteState;
 import com.leventime.qualificationproject.features.login.presentation.states.LoginInitState;
-import com.leventime.qualificationproject.features.login.presentation.states.LoginOwner;
 import com.leventime.qualificationproject.features.login.presentation.states.LoginProcessingState;
 import com.leventime.qualificationproject.util.Errors;
 import com.leventime.qualificationproject.util.Strings;
@@ -26,7 +25,7 @@ import timber.log.Timber;
  *
  * @author kv
  */
-public class LoginPresenterImpl extends BasePresenterImpl<LoginView> implements LoginPresenter, LoginOwner{
+public class LoginPresenterImpl extends BasePresenterImpl<LoginView> implements LoginPresenter{
 
     private final LoginInteractor mInteractor;
     private final LoginValidator mLoginValidator;
