@@ -1,4 +1,4 @@
-package com.leventime.qualificationproject.base.resources;
+package com.leventime.qualificationproject.base.core.data;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -12,7 +12,7 @@ import javax.inject.Inject;
  *
  * @author kv
  */
-public class ResourceManager{
+public class ResourceManagerImpl implements ResourceManager{
 
     private final Context mContext;
 
@@ -20,7 +20,7 @@ public class ResourceManager{
      * @param aContext context
      */
     @Inject
-    public ResourceManager(@NonNull Context aContext){
+    public ResourceManagerImpl(@NonNull Context aContext){
         mContext = aContext;
     }
 
@@ -31,6 +31,7 @@ public class ResourceManager{
      * @return string
      */
     @NonNull
+    @Override
     public String getStringResource(@StringRes int aResourceId, @Nullable Object... aFormatArgs){
         return mContext.getString(aResourceId, aFormatArgs);
     }

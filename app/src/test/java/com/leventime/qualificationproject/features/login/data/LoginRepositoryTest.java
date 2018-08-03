@@ -1,8 +1,8 @@
 package com.leventime.qualificationproject.features.login.data;
 
 import com.leventime.qualificationproject.api.AuthApi;
-import com.leventime.qualificationproject.base.resources.PreferenceManager;
-import com.leventime.qualificationproject.base.resources.ResourceManager;
+import com.leventime.qualificationproject.base.core.data.PreferenceManagerImpl;
+import com.leventime.qualificationproject.base.core.data.ResourceManagerImpl;
 import com.leventime.qualificationproject.features.login.domain.LoginDomain;
 import com.leventime.qualificationproject.features.login.domain.UserInfoDomain;
 
@@ -28,9 +28,9 @@ import static org.mockito.Mockito.when;
 public class LoginRepositoryTest{
 
     @Mock
-    ResourceManager mResourceManager;
+    ResourceManagerImpl mResourceManager;
     @Mock
-    PreferenceManager mPreferenceManager;
+    PreferenceManagerImpl mPreferenceManager;
     @Mock
     AuthApi mApi;
 

@@ -1,4 +1,4 @@
-package com.leventime.qualificationproject.base.di.features.login;
+package com.leventime.qualificationproject.features.login.di;
 
 import com.leventime.qualificationproject.features.login.presentation.LoginActivity;
 

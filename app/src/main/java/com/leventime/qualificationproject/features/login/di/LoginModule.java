@@ -1,11 +1,11 @@
-package com.leventime.qualificationproject.base.di.features.login;
+package com.leventime.qualificationproject.features.login.di;
 
 import android.support.annotation.NonNull;
 
 import com.leventime.qualificationproject.api.AuthApi;
+import com.leventime.qualificationproject.base.core.data.PreferenceManager;
+import com.leventime.qualificationproject.base.core.data.ResourceManager;
 import com.leventime.qualificationproject.base.core.presentation.Validator;
-import com.leventime.qualificationproject.base.resources.PreferenceManager;
-import com.leventime.qualificationproject.base.resources.ResourceManager;
 import com.leventime.qualificationproject.features.login.data.LoginRepository;
 import com.leventime.qualificationproject.features.login.data.LoginRepositoryImpl;
 import com.leventime.qualificationproject.features.login.domain.LoginInteractor;

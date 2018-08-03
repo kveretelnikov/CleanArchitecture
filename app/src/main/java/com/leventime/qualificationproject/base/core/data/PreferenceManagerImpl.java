@@ -1,4 +1,4 @@
-package com.leventime.qualificationproject.base.resources;
+package com.leventime.qualificationproject.base.core.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,7 +14,7 @@ import static android.content.Context.MODE_PRIVATE;
  *
  * @author kv
  */
-public class PreferenceManager{
+public class PreferenceManagerImpl implements PreferenceManager{
 
     private static final String PREF_TOKEN = "token";
     private SharedPreferences mPreference;
@@ -22,7 +22,7 @@ public class PreferenceManager{
     /**
      * @param aContext android context
      */
-    public PreferenceManager(@NonNull Context aContext){
+    public PreferenceManagerImpl(@NonNull Context aContext){
         String appName = aContext.getResources().getString(R.string.app_name);
         mPreference = aContext.getSharedPreferences(appName, MODE_PRIVATE);
     }
@@ -32,6 +32,7 @@ public class PreferenceManager{
      *
      * @param aToken token
      */
+    @Override
     public void saveToken(@NonNull String aToken){
         mPreference.edit().putString(PREF_TOKEN, aToken).apply();
     }
@@ -42,6 +43,7 @@ public class PreferenceManager{
      * @return token
      */
     @Nullable
+    @Override
     public String getToken(){
         return mPreference.getString(PREF_TOKEN, null);
     }
@@ -49,6 +51,7 @@ public class PreferenceManager{
     /**
      * Clear all data
      */
+    @Override
     public void clearAll(){
         mPreference.edit().clear().apply();
     }

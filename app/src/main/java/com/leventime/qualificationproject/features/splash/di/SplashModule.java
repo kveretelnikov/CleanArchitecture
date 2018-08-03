@@ -1,8 +1,8 @@
-package com.leventime.qualificationproject.base.di.features.splash;
+package com.leventime.qualificationproject.features.splash.di;
 
 import android.support.annotation.NonNull;
 
-import com.leventime.qualificationproject.base.resources.PreferenceManager;
+import com.leventime.qualificationproject.base.core.data.PreferenceManager;
 import com.leventime.qualificationproject.features.splash.data.SplashRepository;
 import com.leventime.qualificationproject.features.splash.data.SplashRepositoryImpl;
 import com.leventime.qualificationproject.features.splash.domain.SplashInteractor;

@@ -1,6 +1,6 @@
 package com.leventime.qualificationproject.features.splash.data;
 
-import com.leventime.qualificationproject.base.resources.PreferenceManager;
+import com.leventime.qualificationproject.base.core.data.PreferenceManagerImpl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.verify;
 public class SplashRepositoryTest{
 
     @Mock
-    PreferenceManager mPreferenceManager;
+    PreferenceManagerImpl mPreferenceManager;
 
     SplashRepositoryImpl mRepository;
 

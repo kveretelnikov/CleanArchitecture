@@ -3,7 +3,7 @@ package com.leventime.qualificationproject.features.splash.data;
 import android.support.annotation.NonNull;
 
 import com.google.common.base.Strings;
-import com.leventime.qualificationproject.base.resources.PreferenceManager;
+import com.leventime.qualificationproject.base.core.data.PreferenceManager;
 
 import io.reactivex.Single;
 

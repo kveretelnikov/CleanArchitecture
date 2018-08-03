@@ -7,9 +7,9 @@ import com.leventime.qualificationproject.App;
 import com.leventime.qualificationproject.R;
 import com.leventime.qualificationproject.base.core.presentation.BaseActivity;
 import com.leventime.qualificationproject.base.core.presentation.BasePresenter;
-import com.leventime.qualificationproject.base.di.features.splash.SplashModule;
 import com.leventime.qualificationproject.features.login.presentation.LoginActivity;
 import com.leventime.qualificationproject.features.main.presentation.MainActivity;
+import com.leventime.qualificationproject.features.splash.di.SplashModule;
 
 import javax.inject.Inject;
 

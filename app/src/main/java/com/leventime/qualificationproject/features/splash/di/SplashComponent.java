@@ -1,4 +1,4 @@
-package com.leventime.qualificationproject.base.di.features.splash;
+package com.leventime.qualificationproject.features.splash.di;
 
 import com.leventime.qualificationproject.features.splash.presentation.SplashActivity;
 

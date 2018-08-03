@@ -1,8 +1,7 @@
 package com.leventime.qualificationproject.base.core.data;
 
 import android.support.annotation.NonNull;
-
-import com.leventime.qualificationproject.base.resources.ResourceManager;
+import android.support.annotation.Nullable;
 
 /**
  * Provide base data
@@ -13,12 +12,16 @@ public class BaseRepositoryImpl implements BaseRepository{
 
     private final ResourceManager mResourceManager;
 
+    /**
+     * @param aResourceManager resource manager
+     */
     public BaseRepositoryImpl(@NonNull ResourceManager aResourceManager){
         mResourceManager = aResourceManager;
     }
 
+    @NonNull
     @Override
-    public String getStringResource(final int aResourceId, @NonNull final Object... aFormatArgs){
+    public String getStringResource(final int aResourceId, @Nullable final Object... aFormatArgs){
         return mResourceManager.getStringResource(aResourceId, aFormatArgs);
     }
 }

@@ -1,4 +1,4 @@
-package com.leventime.qualificationproject.base.di.features.login;
+package com.leventime.qualificationproject.features.login.di;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

@@ -17,7 +17,7 @@ import com.leventime.qualificationproject.R;
 import com.leventime.qualificationproject.base.core.presentation.BaseActivity;
 import com.leventime.qualificationproject.base.core.presentation.BasePresenter;
 import com.leventime.qualificationproject.base.core.presentation.views.ProgressDialog;
-import com.leventime.qualificationproject.base.di.features.login.LoginModule;
+import com.leventime.qualificationproject.features.login.di.LoginModule;
 import com.leventime.qualificationproject.features.main.presentation.MainActivity;
 import com.leventime.qualificationproject.util.Strings;
 import com.leventime.qualificationproject.util.Views;
