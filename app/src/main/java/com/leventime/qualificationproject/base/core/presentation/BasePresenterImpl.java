@@ -30,10 +30,6 @@ public class BasePresenterImpl<VIEW extends BaseView> implements BasePresenter<V
     @Override
     public void attachView(@NonNull final VIEW aView){
         mView = aView;
-        if(mView instanceof BaseViewState.ProgressSupport){
-            //Need to remove progress if the page has been recreated
-            ((BaseViewState.ProgressSupport) mView).hideLoadingProgress();
-        }
         onViewAttached();
     }
 
@@ -43,9 +39,15 @@ public class BasePresenterImpl<VIEW extends BaseView> implements BasePresenter<V
         mCompositeDisposable.clear();
     }
 
+    /**
+     * Get view
+     *
+     * @return view
+     */
+    @NonNull
     @Override
-    public boolean isViewAttached(){
-        return mView != null;
+    public VIEW getView(){
+        return mView;
     }
 
     /**
@@ -56,13 +58,10 @@ public class BasePresenterImpl<VIEW extends BaseView> implements BasePresenter<V
     }
 
     /**
-     * Get view
-     *
-     * @return view
+     * Clear disposables
      */
-    @NonNull
-    protected VIEW getView(){
-        return mView;
+    protected void clearDisposables(){
+        mCompositeDisposable.clear();
     }
 
     /**

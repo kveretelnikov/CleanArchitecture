@@ -22,10 +22,6 @@ public interface BasePresenter<VIEW extends BaseView>{
      */
     void detachView();
 
-    /**
-     * Check that view is attached
-     *
-     * @return true if view attached
-     */
-    boolean isViewAttached();
+    @NonNull
+    VIEW getView();
 }

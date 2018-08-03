@@ -13,6 +13,7 @@ import com.leventime.qualificationproject.features.login.domain.LoginInteractorI
 import com.leventime.qualificationproject.features.login.presentation.LoginPresenter;
 import com.leventime.qualificationproject.features.login.presentation.LoginPresenterImpl;
 import com.leventime.qualificationproject.features.login.presentation.LoginValidator;
+import com.leventime.qualificationproject.features.login.presentation.states.LoginBaseState;
 
 import dagger.Module;
 import dagger.Provides;
@@ -26,6 +27,15 @@ import dagger.Provides;
 @Module
 public class LoginModule{
 
+    private final LoginBaseState.LoginStateType mType;
+
+    /**
+     * @param aType current presenter state type
+     */
+    public LoginModule(@NonNull LoginBaseState.LoginStateType aType){
+        mType = aType;
+    }
+
     @LoginScope
     @Provides
     @NonNull
@@ -37,7 +47,7 @@ public class LoginModule{
     @Provides
     @NonNull
     LoginPresenter providesPresenter(@NonNull LoginInteractor aInteractor, @NonNull LoginValidator aValidator){
-        return new LoginPresenterImpl(aInteractor, aValidator);
+        return new LoginPresenterImpl(aInteractor, aValidator, LoginBaseState.getState(mType));
     }
 
     @LoginScope

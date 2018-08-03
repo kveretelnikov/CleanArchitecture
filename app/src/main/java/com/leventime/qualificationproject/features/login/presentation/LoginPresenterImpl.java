@@ -1,12 +1,18 @@
 package com.leventime.qualificationproject.features.login.presentation;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.leventime.qualificationproject.BuildConfig;
 import com.leventime.qualificationproject.R;
 import com.leventime.qualificationproject.base.core.presentation.BasePresenterImpl;
 import com.leventime.qualificationproject.features.login.domain.LoginDomain;
 import com.leventime.qualificationproject.features.login.domain.LoginInteractor;
+import com.leventime.qualificationproject.features.login.presentation.states.LoginBaseState;
+import com.leventime.qualificationproject.features.login.presentation.states.LoginCompleteState;
+import com.leventime.qualificationproject.features.login.presentation.states.LoginInitState;
+import com.leventime.qualificationproject.features.login.presentation.states.LoginOwner;
+import com.leventime.qualificationproject.features.login.presentation.states.LoginProcessingState;
 import com.leventime.qualificationproject.util.Errors;
 import com.leventime.qualificationproject.util.Strings;
 
@@ -20,20 +26,24 @@ import timber.log.Timber;
  *
  * @author kv
  */
-public class LoginPresenterImpl extends BasePresenterImpl<LoginView> implements LoginPresenter{
+public class LoginPresenterImpl extends BasePresenterImpl<LoginView> implements LoginPresenter, LoginOwner{
 
     private final LoginInteractor mInteractor;
     private final LoginValidator mLoginValidator;
+    private LoginBaseState mState;
 
     /**
      * @param aInteractor interactor
      * @param aLoginValidator login validator
      */
     public LoginPresenterImpl(@NonNull LoginInteractor aInteractor,
-                              @NonNull LoginValidator aLoginValidator){
+                              @NonNull LoginValidator aLoginValidator,
+                              @NonNull LoginBaseState aState){
         super(LoginView.EMPTY);
         mInteractor = aInteractor;
         mLoginValidator = aLoginValidator;
+        mState = aState;
+        mState.setOwner(this);
     }
 
     @Override
@@ -50,8 +60,9 @@ public class LoginPresenterImpl extends BasePresenterImpl<LoginView> implements 
 
     @NonNull
     @Override
-    public String onEmailChanged(@NonNull final String aEmail){
+    public String onEmailChanged(@Nullable final String aEmail){
         mInteractor.setEmail(aEmail);
+        mState.invalidateView(getView());
         if(mLoginValidator.validateLoginEmail(aEmail)){
             return Strings.EMPTY;
         } else{
@@ -61,8 +72,9 @@ public class LoginPresenterImpl extends BasePresenterImpl<LoginView> implements 
 
     @NonNull
     @Override
-    public String onPasswordChanged(@NonNull final String aPassword){
+    public String onPasswordChanged(@Nullable final String aPassword){
         mInteractor.setPassword(aPassword);
+        mState.invalidateView(getView());
         if(mLoginValidator.validateLoginPassword(aPassword)){
             return Strings.EMPTY;
         } else{
@@ -72,31 +84,12 @@ public class LoginPresenterImpl extends BasePresenterImpl<LoginView> implements 
 
     @Override
     public void onLoginClicked(){
-        LoginValidationErrors validationResult = getValidationResult();
-        if(validationResult.hasErrors()){
-            getView().showValidationErrors(validationResult);
-        } else{
-            Disposable disposable = mInteractor.login()
-                    .retry(BuildConfig.COUNT_RETRY_REQUEST)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe(aDisposable -> getView().showLoadingProgress())
-                    .doFinally(getView()::hideLoadingProgress)
-                    .subscribe(getView()::navigateToMainView, aThrowable -> {
-                        Timber.e(aThrowable);
-                        getView().showError(Errors.getErrorMessage(aThrowable, mInteractor.getStringResource(R.string.error_network)));
-                    });
-            addToDispose(disposable);
-        }
+        setState(new LoginProcessingState());
     }
 
-    /**
-     * Get validation result
-     *
-     * @return validation result
-     */
     @NonNull
-    private LoginValidationErrors getValidationResult(){
+    @Override
+    public LoginValidationErrors getLoginValidationErrors(){
         LoginDomain loginData = mInteractor.getLoginData();
         LoginValidationErrors loginValidationErrors = new LoginValidationErrors();
         String emailError = mLoginValidator.validateLoginEmail(loginData.getEmail()) ? null : mInteractor.getStringResource(R.string.error_login_email_validate);
@@ -104,5 +97,39 @@ public class LoginPresenterImpl extends BasePresenterImpl<LoginView> implements 
         loginValidationErrors.setEmailError(emailError);
         loginValidationErrors.setPasswordError(passwordError);
         return loginValidationErrors;
+    }
+
+    @Override
+    public void login(){
+        getView().showLoadingProgress();
+        Disposable disposable = mInteractor.login()
+                .retry(BuildConfig.COUNT_RETRY_REQUEST)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(aDisposable -> getView().showLoadingProgress())
+                .doFinally(getView()::hideLoadingProgress)
+                .subscribe(() -> {
+                    setState(new LoginCompleteState());
+                }, aThrowable -> {
+                    Timber.e(aThrowable);
+                    setState(new LoginInitState());
+                    getView().showError(Errors.getErrorMessage(aThrowable, mInteractor.getStringResource(R.string.error_network)));
+                });
+        addToDispose(disposable);
+    }
+
+    @Override
+    public void setState(@NonNull final LoginBaseState aState){
+        mState.onExit();
+        mState = aState;
+        clearDisposables();
+        mState.setOwner(this);
+        mState.onEnter(getView());
+    }
+
+    @NonNull
+    @Override
+    public LoginBaseState.LoginStateType getStateType(){
+        return mState.getType();
     }
 }

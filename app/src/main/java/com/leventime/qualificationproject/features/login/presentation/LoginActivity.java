@@ -10,14 +10,17 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.widget.Button;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.leventime.qualificationproject.App;
+import com.leventime.qualificationproject.BuildConfig;
 import com.leventime.qualificationproject.R;
 import com.leventime.qualificationproject.base.core.presentation.BaseActivity;
 import com.leventime.qualificationproject.base.core.presentation.BasePresenter;
 import com.leventime.qualificationproject.base.core.presentation.views.ProgressDialog;
 import com.leventime.qualificationproject.features.login.di.LoginModule;
+import com.leventime.qualificationproject.features.login.presentation.states.LoginBaseState;
 import com.leventime.qualificationproject.features.main.presentation.MainActivity;
 import com.leventime.qualificationproject.util.Strings;
 import com.leventime.qualificationproject.util.Views;
@@ -48,11 +51,15 @@ public class LoginActivity extends BaseActivity implements LoginView{
     AppCompatEditText mEtPassword;
     @BindView(R.id.tilPasswordLogin)
     TextInputLayout mTilPassword;
-    private static final int SKIP_COUNT = 1;
     @Nullable
     private Actions mListener;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout mCoordinatorLayout;
+    private static final String EXTRA_STATE = BuildConfig.APPLICATION_ID + ".EXTRA_STATE";
+    private static final String EXTRA_EMAIL = BuildConfig.APPLICATION_ID + ".EXTRA_EMAIL";
+    private static final String EXTRA_PASSWORD = BuildConfig.APPLICATION_ID + ".EXTRA_PASSWORD";
+    @BindView(R.id.btnLogin)
+    Button mBtnLogin;
 
     /**
      * Create intent to start {@link LoginActivity}
@@ -65,23 +72,31 @@ public class LoginActivity extends BaseActivity implements LoginView{
         return new Intent(aContext, LoginActivity.class);
     }
 
-
     @Override
     protected void onCreate(@Nullable final Bundle aSavedInstanceState){
         super.onCreate(aSavedInstanceState);
+        LoginBaseState.LoginStateType loginStateType = aSavedInstanceState == null ? LoginBaseState.LoginStateType.INIT : LoginBaseState.LoginStateType.valueOf(
+                aSavedInstanceState.getString(EXTRA_STATE));
         App.get(this).getAppComponent()
                 .loginComponentBuilder()
-                .loginModule(new LoginModule())
+                .loginModule(new LoginModule(loginStateType))
                 .build()
                 .inject(this);
-        initViews();
         mPresenter.attachView(this);
+        initViews(aSavedInstanceState);
     }
 
     @Override
-    public void showValidationErrors(@NonNull final LoginValidationErrors aLoginValidationErrors){
-        setValidationError(mTilEmail, aLoginValidationErrors.getEmailError());
-        setValidationError(mTilPassword, aLoginValidationErrors.getPasswordError());
+    protected void onSaveInstanceState(final Bundle aOutState){
+        aOutState.putCharSequence(EXTRA_EMAIL, mEtEmail.getText());
+        aOutState.putCharSequence(EXTRA_PASSWORD, mEtPassword.getText());
+        aOutState.putString(EXTRA_STATE, mPresenter.getStateType().name());
+        super.onSaveInstanceState(aOutState);
+    }
+
+    @Override
+    public void setLoginEnabled(final boolean aEnabled){
+        mBtnLogin.setEnabled(aEnabled);
     }
 
     @Override
@@ -128,11 +143,23 @@ public class LoginActivity extends BaseActivity implements LoginView{
 
     /**
      * Init views
+     *
+     * @param aBundle bundle
      */
-    private void initViews(){
+    private void initViews(@Nullable Bundle aBundle){
+        if(aBundle != null){
+            CharSequence email = aBundle.getCharSequence(EXTRA_EMAIL);
+            CharSequence password = aBundle.getCharSequence(EXTRA_PASSWORD);
+            mEtEmail.setText(email);
+            mEtPassword.setText(password);
+        }
+        if(mListener != null){
+            mListener.onEmailChanged(mEtEmail.getText().toString());
+            mListener.onPasswordChanged(mEtPassword.getText().toString());
+        }
         disposeOnDestroy(
                 RxTextView.textChanges(mEtEmail)
-                        .skip(SKIP_COUNT)
+                        .skipInitialValue()
                         .map(CharSequence::toString)
                         .map(aEmail -> {
                             if(mListener != null){
@@ -146,7 +173,7 @@ public class LoginActivity extends BaseActivity implements LoginView{
                         .subscribe(aError -> setValidationError(mTilEmail, aError), this::handleValidationError),
 
                 RxTextView.textChanges(mEtPassword)
-                        .skip(SKIP_COUNT)
+                        .skipInitialValue()
                         .map(CharSequence::toString)
                         .map(aPassword -> {
                             if(mListener != null){

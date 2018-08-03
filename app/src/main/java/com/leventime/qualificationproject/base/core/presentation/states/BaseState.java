@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.leventime.qualificationproject.base.core.presentation.BaseView;
 
 /**
+ *
  * Describe base state
  *
  * @author kv

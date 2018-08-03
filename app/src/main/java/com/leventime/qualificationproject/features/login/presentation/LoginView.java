@@ -27,7 +27,7 @@ public interface LoginView extends BaseView,
         }
 
         @Override
-        public void showValidationErrors(@NonNull final LoginValidationErrors aLoginValidationErrors){
+        public void setLoginEnabled(final boolean aEnabled){
 
         }
 
@@ -58,11 +58,11 @@ public interface LoginView extends BaseView,
     void navigateToMainView();
 
     /**
-     * Show validation errors
+     * Set login enabled
      *
-     * @param aLoginValidationErrors login validation errors
+     * @param aEnabled true if login need set enabled
      */
-    void showValidationErrors(@NonNull LoginValidationErrors aLoginValidationErrors);
+    void setLoginEnabled(boolean aEnabled);
 
     /**
      * View generated actions
@@ -76,7 +76,7 @@ public interface LoginView extends BaseView,
          * @return error string or empty string
          */
         @NonNull
-        String onEmailChanged(@NonNull String aEmail);
+        String onEmailChanged(@Nullable String aEmail);
 
         /**
          * Handle [assword changed
@@ -85,7 +85,7 @@ public interface LoginView extends BaseView,
          * @return error string or empty string
          */
         @NonNull
-        String onPasswordChanged(@NonNull String aPassword);
+        String onPasswordChanged(@Nullable String aPassword);
 
         /**
          * Handle login click
