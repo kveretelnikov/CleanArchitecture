@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.widget.Button;
 
+import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.leventime.qualificationproject.App;
 import com.leventime.qualificationproject.BuildConfig;
@@ -25,12 +26,16 @@ import com.leventime.qualificationproject.features.main.presentation.MainActivit
 import com.leventime.qualificationproject.util.Strings;
 import com.leventime.qualificationproject.util.Views;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
+
+import static com.leventime.qualificationproject.util.Views.THROTTLE_TIME_CHANGES;
 
 /**
  * Show login
@@ -184,7 +189,14 @@ public class LoginActivity extends BaseActivity implements LoginView{
                         })
                         .subscribeOn(AndroidSchedulers.mainThread())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(aError -> setValidationError(mTilPassword, aError), this::handleValidationError)
+                        .subscribe(aError -> setValidationError(mTilPassword, aError), this::handleValidationError),
+                RxView.clicks(mBtnLogin)
+                        .throttleLast(THROTTLE_TIME_CHANGES, TimeUnit.MILLISECONDS)
+                        .subscribe(aO -> {
+                            if(mListener != null){
+                                mListener.onLoginClicked();
+                            }
+                        }, Timber::e)
         );
         configureToolbar(mToolbar, getString(R.string.login_title), false);
     }

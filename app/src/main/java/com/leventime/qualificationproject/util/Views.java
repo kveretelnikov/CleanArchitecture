@@ -20,6 +20,11 @@ import butterknife.ButterKnife;
 public final class Views{
 
     /**
+     * Throttle time view changes in milliseconds
+     */
+    public static final int THROTTLE_TIME_CHANGES = 500;
+
+    /**
      * Action that changes visibility state of view
      */
     public static final ButterKnife.Setter<View, Integer> VISIBLE = (view, value, index) -> view.setVisibility(value);
