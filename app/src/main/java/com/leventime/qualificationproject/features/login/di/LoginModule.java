@@ -6,6 +6,8 @@ import com.leventime.qualificationproject.api.AuthApi;
 import com.leventime.qualificationproject.base.core.data.PreferenceManager;
 import com.leventime.qualificationproject.base.core.data.ResourceManager;
 import com.leventime.qualificationproject.base.core.presentation.Validator;
+import com.leventime.qualificationproject.base.room.AppDatabase;
+import com.leventime.qualificationproject.base.room.dao.UserDao;
 import com.leventime.qualificationproject.features.login.data.LoginRepository;
 import com.leventime.qualificationproject.features.login.data.LoginRepositoryImpl;
 import com.leventime.qualificationproject.features.login.domain.LoginInteractor;
@@ -60,8 +62,15 @@ public class LoginModule{
     @LoginScope
     @Provides
     @NonNull
-    LoginRepository providesRepository(@NonNull ResourceManager aResourceManager, @NonNull PreferenceManager aPreferenceManager, @NonNull AuthApi aApi){
-        return new LoginRepositoryImpl(aResourceManager, aPreferenceManager, aApi);
+    UserDao providesUserDao(@NonNull AppDatabase aAppDatabase){
+        return aAppDatabase.userDao();
+    }
+
+    @LoginScope
+    @Provides
+    @NonNull
+    LoginRepository providesRepository(@NonNull ResourceManager aResourceManager, @NonNull PreferenceManager aPreferenceManager, @NonNull AuthApi aApi, @NonNull UserDao aUserDao){
+        return new LoginRepositoryImpl(aResourceManager, aPreferenceManager, aApi, aUserDao);
     }
 
 }

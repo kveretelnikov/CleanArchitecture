@@ -6,6 +6,7 @@ import com.leventime.qualificationproject.api.AuthApi;
 import com.leventime.qualificationproject.base.core.data.BaseRepositoryImpl;
 import com.leventime.qualificationproject.base.core.data.PreferenceManager;
 import com.leventime.qualificationproject.base.core.data.ResourceManager;
+import com.leventime.qualificationproject.base.room.dao.UserDao;
 import com.leventime.qualificationproject.features.login.domain.LoginDomain;
 import com.leventime.qualificationproject.features.login.domain.LoginDomainMapper;
 import com.leventime.qualificationproject.features.login.domain.LoginResponseDomain;
@@ -22,17 +23,22 @@ public class LoginRepositoryImpl extends BaseRepositoryImpl implements LoginRepo
 
     private final AuthApi mAuthApi;
     private final PreferenceManager mPreferenceManager;
+    private final UserDao mUserDao;
 
     /**
      * @param aResourceManager resource manager
+     * @param aPreferenceManager preference manager
      * @param aLoginApi login api
+     * @param aUserDao user dao
      */
     public LoginRepositoryImpl(@NonNull final ResourceManager aResourceManager,
                                @NonNull PreferenceManager aPreferenceManager,
-                               @NonNull AuthApi aLoginApi){
+                               @NonNull AuthApi aLoginApi,
+                               @NonNull UserDao aUserDao){
         super(aResourceManager);
         mPreferenceManager = aPreferenceManager;
         mAuthApi = aLoginApi;
+        mUserDao = aUserDao;
     }
 
     @NonNull
@@ -56,7 +62,7 @@ public class LoginRepositoryImpl extends BaseRepositoryImpl implements LoginRepo
 
     @Override
     public void saveUserInfo(@NonNull final UserInfoDomain aUserInfoDomain){
-        //TODO kv 28/07/18: need add save to db
+        mUserDao.saveUser(LoginDomainMapper.mapUserInfoToEntity(aUserInfoDomain));
     }
 
     @Override

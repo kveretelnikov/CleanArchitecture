@@ -2,9 +2,9 @@ package com.leventime.qualificationproject.api;
 
 import android.support.annotation.NonNull;
 
-import com.leventime.qualificationproject.features.login.data.LoginEntity;
+import com.leventime.qualificationproject.features.login.data.LoginRequestEntity;
 import com.leventime.qualificationproject.features.login.data.LoginResponseEntity;
-import com.leventime.qualificationproject.features.login.data.UserInfoEntity;
+import com.leventime.qualificationproject.features.login.data.UserInfoResponseEntity;
 
 import io.reactivex.Single;
 import retrofit2.http.Body;
@@ -21,12 +21,12 @@ public interface AuthApi{
     /**
      * Login
      *
-     * @param aLoginEntity login data
+     * @param aLoginRequestEntity login data
      * @return login response data
      */
     @POST("auth/login")
     @NonNull
-    Single<LoginResponseEntity> login(@Body @NonNull LoginEntity aLoginEntity);
+    Single<LoginResponseEntity> login(@Body @NonNull LoginRequestEntity aLoginRequestEntity);
 
     /**
      * Get user info
@@ -35,5 +35,5 @@ public interface AuthApi{
      */
     @GET("user")
     @NonNull
-    Single<UserInfoEntity> getUserInfo();
+    Single<UserInfoResponseEntity> getUserInfo();
 }

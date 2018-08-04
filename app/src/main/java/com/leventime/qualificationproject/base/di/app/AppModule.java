@@ -8,6 +8,7 @@ import com.leventime.qualificationproject.base.core.data.PreferenceManager;
 import com.leventime.qualificationproject.base.core.data.PreferenceManagerImpl;
 import com.leventime.qualificationproject.base.core.data.ResourceManager;
 import com.leventime.qualificationproject.base.core.data.ResourceManagerImpl;
+import com.leventime.qualificationproject.base.room.AppDatabase;
 
 import javax.inject.Singleton;
 
@@ -48,5 +49,11 @@ public class AppModule{
     @Singleton
     ResourceManager providesResourceManager(@NonNull Context aContext){
         return new ResourceManagerImpl(aContext);
+    }
+
+    @Provides
+    @Singleton
+    AppDatabase providesAppDatabe(@NonNull Context aContext){
+        return AppDatabase.build(aContext);
     }
 }

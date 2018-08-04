@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
  * @param password password
  * @author kv
  */
-data class LoginEntity(
+data class LoginRequestEntity(
         @SerializedName("username")
         var email: String? = null,
 

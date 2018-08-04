@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName
  * @param lastName last name
  * @author kv
  */
-data class UserInfoEntity(
+data class UserInfoResponseEntity(
         @SerializedName("id")
         val id: Long,
         @SerializedName("avatar")

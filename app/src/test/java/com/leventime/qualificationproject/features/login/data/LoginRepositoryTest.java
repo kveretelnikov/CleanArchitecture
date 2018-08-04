@@ -48,10 +48,10 @@ public class LoginRepositoryTest{
         loginDomain.setPassword("password");
         String token = "token";
         LoginResponseEntity loginResponseEntity = new LoginResponseEntity(token);
-        when(mApi.login(any(LoginEntity.class))).thenReturn(Single.just(loginResponseEntity));
+        when(mApi.login(any(LoginRequestEntity.class))).thenReturn(Single.just(loginResponseEntity));
         mRepository.login(loginDomain)
                 .test();
-        verify(mApi).login(any(LoginEntity.class));
+        verify(mApi).login(any(LoginRequestEntity.class));
     }
 
     @Test
@@ -66,7 +66,7 @@ public class LoginRepositoryTest{
         String avatarUrl = "url";
         String firstName = "first";
         String lastName = "last";
-        UserInfoEntity userInfoEntity = new UserInfoEntity(id, avatarUrl, firstName, lastName);
+        UserInfoResponseEntity userInfoEntity = new UserInfoResponseEntity(id, avatarUrl, firstName, lastName);
         when(mApi.getUserInfo()).thenReturn(Single.just(userInfoEntity));
         mRepository.getUserInfo()
                 .test();

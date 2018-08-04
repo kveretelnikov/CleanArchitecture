@@ -1,8 +1,8 @@
 package com.leventime.qualificationproject.features.login.domain;
 
-import com.leventime.qualificationproject.features.login.data.LoginEntity;
+import com.leventime.qualificationproject.features.login.data.LoginRequestEntity;
 import com.leventime.qualificationproject.features.login.data.LoginResponseEntity;
-import com.leventime.qualificationproject.features.login.data.UserInfoEntity;
+import com.leventime.qualificationproject.features.login.data.UserInfoResponseEntity;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,9 +25,9 @@ public class LoginDomainMapperTest{
         String password = "password";
         loginDomain.setEmail(email);
         loginDomain.setPassword(password);
-        LoginEntity loginEntity = LoginDomainMapper.mapLoginToEntity(loginDomain);
-        assertEquals(email, loginEntity.getEmail());
-        assertEquals(password, loginEntity.getPassword());
+        LoginRequestEntity loginRequestEntity = LoginDomainMapper.mapLoginToEntity(loginDomain);
+        assertEquals(email, loginRequestEntity.getEmail());
+        assertEquals(password, loginRequestEntity.getPassword());
     }
 
     @Test
@@ -44,7 +44,7 @@ public class LoginDomainMapperTest{
         String avatarUrl = "url";
         String firstName = "first";
         String lastName = "last";
-        UserInfoEntity userInfoEntity = new UserInfoEntity(id, avatarUrl, firstName, lastName);
+        UserInfoResponseEntity userInfoEntity = new UserInfoResponseEntity(id, avatarUrl, firstName, lastName);
         UserInfoDomain userInfoDomain = LoginDomainMapper.mapUserInfoFromEntity(userInfoEntity);
         assertEquals(id, userInfoDomain.getId());
         assertEquals(avatarUrl, userInfoDomain.getAvatarUrl());
