@@ -15,16 +15,9 @@ import com.leventime.qualificationproject.base.di.NetworkModule;
  */
 public class TestApp extends App{
 
-    private static TestApp sInstance;
-
-    public static App getInstance(){
-        return sInstance;
-    }
-
     @Override
     public void onCreate(){
         super.onCreate();
-        sInstance = this;
     }
 
     @NonNull
@@ -33,7 +26,7 @@ public class TestApp extends App{
         return DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .networkModule(new NetworkModule(BuildConfig.BASE_URL))
-                .apiModule(new MockApiModule())
+                .apiModule(new MockApiModule(this))
                 .build();
     }
 }

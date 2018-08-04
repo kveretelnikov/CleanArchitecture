@@ -1,5 +1,6 @@
 package com.leventime.qualificationproject.base.di;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.leventime.qualificationproject.api.AuthApi;
@@ -16,9 +17,15 @@ import dagger.Module;
 @Module
 public class MockApiModule extends ApiModule{
 
+    private final Context mContext;
+
+    public MockApiModule(@NonNull Context aContext){
+        mContext = aContext;
+    }
+
     @NonNull
     @Override
     AuthApi loginApi(@NonNull final ApiClient aClient){
-        return new MockAuthApi(aClient.createMockApiDelegate(AuthApi.class));
+        return new MockAuthApi(mContext, aClient.createMockApiDelegate(AuthApi.class));
     }
 }

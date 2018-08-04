@@ -89,6 +89,7 @@ dependencies {
     androidTestImplementation libraries.expressoCore
     androidTestImplementation libraries.archCoreTesting
     implementation libraries.retrofitMock
+    implementation libraries.expressoIntents
 
     //Support
     implementation libraries.appcompatV7

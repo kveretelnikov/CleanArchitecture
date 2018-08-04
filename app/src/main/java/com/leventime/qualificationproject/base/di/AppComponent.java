@@ -1,5 +1,6 @@
 package com.leventime.qualificationproject.base.di;
 
+import com.leventime.qualificationproject.App;
 import com.leventime.qualificationproject.features.login.di.LoginComponent;
 import com.leventime.qualificationproject.features.splash.di.SplashComponent;
 
@@ -17,4 +18,6 @@ public interface AppComponent{
     LoginComponent.Builder loginComponentBuilder();
 
     SplashComponent.Builder splashComponentBuilder();
+
+    void inject(App aApp);
 }

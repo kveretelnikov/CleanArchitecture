@@ -4,11 +4,15 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.leventime.qualificationproject.base.core.data.PreferenceManager;
 import com.leventime.qualificationproject.base.di.ApiModule;
 import com.leventime.qualificationproject.base.di.AppComponent;
 import com.leventime.qualificationproject.base.di.AppModule;
 import com.leventime.qualificationproject.base.di.DaggerAppComponent;
 import com.leventime.qualificationproject.base.di.NetworkModule;
+import com.leventime.qualificationproject.base.room.AppDatabase;
+
+import javax.inject.Inject;
 
 import timber.log.Timber;
 
@@ -20,6 +24,10 @@ import timber.log.Timber;
 public class App extends Application{
 
     private AppComponent mAppComponent;
+    @Inject
+    PreferenceManager mPreferenceManager;
+    @Inject
+    AppDatabase mAppDatabase;
 
     /**
      * Get application instance
@@ -39,6 +47,7 @@ public class App extends Application{
             Timber.plant(new Timber.DebugTree());
         }
         mAppComponent = buildAppComponent();
+        mAppComponent.inject(this);
     }
 
     /**
@@ -63,5 +72,25 @@ public class App extends Application{
     @NonNull
     public AppComponent getAppComponent(){
         return mAppComponent;
+    }
+
+    /**
+     * Get preference manager
+     *
+     * @return preference manager
+     */
+    @NonNull
+    public PreferenceManager getPreferenceManager(){
+        return mPreferenceManager;
+    }
+
+    /**
+     * Get appd database
+     *
+     * @return database
+     */
+    @NonNull
+    public AppDatabase getAppDatabase(){
+        return mAppDatabase;
     }
 }
