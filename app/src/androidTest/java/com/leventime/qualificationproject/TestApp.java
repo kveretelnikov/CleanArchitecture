@@ -26,7 +26,7 @@ public class TestApp extends App{
         return DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .networkModule(new NetworkModule(BuildConfig.BASE_URL))
-                .apiModule(new MockApiModule(this))
+                .apiModule(new MockApiModule())
                 .build();
     }
 }

@@ -1,9 +1,7 @@
 package com.leventime.qualificationproject.api;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.leventime.qualificationproject.R;
 import com.leventime.qualificationproject.features.login.data.LoginRequestEntity;
 import com.leventime.qualificationproject.features.login.data.LoginResponseEntity;
 import com.leventime.qualificationproject.features.login.data.UserInfoResponseEntity;
@@ -23,14 +21,11 @@ import static com.leventime.qualificationproject.features.login.presentation.Log
 public class MockAuthApi implements AuthApi{
 
     private final BehaviorDelegate<AuthApi> mBehaviorDelegate;
-    private final Context mContext;
 
     /**
-     * @param aContext android context
      * @param aBehaviorDelegate behavior delegate
      */
-    public MockAuthApi(@NonNull Context aContext, @NonNull BehaviorDelegate<AuthApi> aBehaviorDelegate){
-        mContext = aContext;
+    public MockAuthApi(@NonNull BehaviorDelegate<AuthApi> aBehaviorDelegate){
         mBehaviorDelegate = aBehaviorDelegate;
     }
 
@@ -38,10 +33,10 @@ public class MockAuthApi implements AuthApi{
     @Override
     public Single<LoginResponseEntity> login(@NonNull final LoginRequestEntity aLoginRequestEntity){
         if(EMAIL.equals(aLoginRequestEntity.getEmail()) && PASSWORD.equals(aLoginRequestEntity.getPassword())){
-            return mBehaviorDelegate.returningResponse(MockResponses.getResponse(mContext, R.raw.login_200_response, LoginResponseEntity.class))
+            return mBehaviorDelegate.returningResponse(MockResponses.getResponse("login_200_response.json", LoginResponseEntity.class))
                     .login(aLoginRequestEntity);
         } else{
-            return mBehaviorDelegate.returningResponse(MockResponses.getResponse(mContext, R.raw.login_400_response, ApiError.class))
+            return mBehaviorDelegate.returningResponse(MockResponses.getResponse("login_400_response.json", ApiError.class))
                     .login(aLoginRequestEntity);
         }
     }
@@ -49,7 +44,7 @@ public class MockAuthApi implements AuthApi{
     @NonNull
     @Override
     public Single<UserInfoResponseEntity> getUserInfo(){
-        return mBehaviorDelegate.returningResponse(MockResponses.getResponse(mContext, R.raw.user_200_response, UserInfoResponseEntity.class))
+        return mBehaviorDelegate.returningResponse(MockResponses.getResponse("user_200_response.json", UserInfoResponseEntity.class))
                 .getUserInfo();
     }
 }
