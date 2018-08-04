@@ -24,6 +24,12 @@ android {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+
+        testOptions {
+            unitTests {
+                includeAndroidResources = true
+            }
+        }
     }
 
     buildTypes {
