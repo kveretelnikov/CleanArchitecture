@@ -3,6 +3,7 @@ package com.leventime.qualificationproject.base.room.dao
 import android.arch.persistence.room.*
 import com.leventime.qualificationproject.base.room.entity.login.UserEntity
 import com.leventime.qualificationproject.util.Constants
+import io.reactivex.Maybe
 
 /**
  * Provide user data
@@ -43,4 +44,7 @@ interface UserDao {
      */
     @Update(onConflict = OnConflictStrategy.IGNORE)
     fun updateUser(user: UserEntity)
+
+    @Query("SELECT * FROM user LIMIT 1")
+    fun getUser(): Maybe<UserEntity>
 }

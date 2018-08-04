@@ -18,6 +18,7 @@ ext.versions = [
         //UI
         constraintLayout   : '1.1.2',
         glide              : '4.5.0',
+        archCore           : '1.1.1',
 
         //Network
         retrofit           : '2.4.0',
@@ -57,6 +58,7 @@ ext.libraries = [
         testRunner           : "com.android.support.test:runner:$versions.testRunner",
         expressoCore         : "com.android.support.test.espresso:espresso-core:$versions.expresso",
         mockito              : "org.mockito:mockito-core:$versions.mockito",
+        archCoreTesting      : "android.arch.core:core-testing:$versions.archCore",
 
         //UI
         constraintLayout     : "com.android.support.constraint:constraint-layout:$versions.constraintLayout",
