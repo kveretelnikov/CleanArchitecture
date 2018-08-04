@@ -1,5 +1,6 @@
 package com.leventime.qualificationproject.features.login.domain;
 
+import com.leventime.qualificationproject.base.room.entity.login.UserEntity;
 import com.leventime.qualificationproject.features.login.data.LoginRequestEntity;
 import com.leventime.qualificationproject.features.login.data.LoginResponseEntity;
 import com.leventime.qualificationproject.features.login.data.UserInfoResponseEntity;
@@ -50,5 +51,19 @@ public class LoginDomainMapperTest{
         assertEquals(avatarUrl, userInfoDomain.getAvatarUrl());
         assertEquals(firstName, userInfoDomain.getFirstName());
         assertEquals(lastName, userInfoDomain.getLastName());
+    }
+
+    @Test
+    public void mapUserInfoToEntity(){
+        long id = 1;
+        String avatarUrl = "url";
+        String firstName = "first";
+        String lastName = "last";
+        UserInfoDomain userInfoDomain = new UserInfoDomain(id, avatarUrl, firstName, lastName);
+        UserEntity userEntity = LoginDomainMapper.mapUserInfoToEntity(userInfoDomain);
+        assertEquals(id, userEntity.getId());
+        assertEquals(avatarUrl, userEntity.getAvatarUrl());
+        assertEquals(firstName, userEntity.getFirstName());
+        assertEquals(lastName, userEntity.getLastName());
     }
 }

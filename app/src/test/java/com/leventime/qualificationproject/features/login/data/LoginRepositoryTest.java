@@ -3,6 +3,8 @@ package com.leventime.qualificationproject.features.login.data;
 import com.leventime.qualificationproject.api.AuthApi;
 import com.leventime.qualificationproject.base.core.data.PreferenceManagerImpl;
 import com.leventime.qualificationproject.base.core.data.ResourceManagerImpl;
+import com.leventime.qualificationproject.base.room.dao.UserDao;
+import com.leventime.qualificationproject.base.room.entity.login.UserEntity;
 import com.leventime.qualificationproject.features.login.domain.LoginDomain;
 import com.leventime.qualificationproject.features.login.domain.UserInfoDomain;
 
@@ -33,12 +35,14 @@ public class LoginRepositoryTest{
     PreferenceManagerImpl mPreferenceManager;
     @Mock
     AuthApi mApi;
+    @Mock
+    UserDao mDao;
 
     private LoginRepositoryImpl mRepository;
 
     @Before
     public void setUp() throws Exception{
-        mRepository = new LoginRepositoryImpl(mResourceManager, mPreferenceManager, mApi);
+        mRepository = new LoginRepositoryImpl(mResourceManager, mPreferenceManager, mApi, mDao);
     }
 
     @Test
@@ -81,6 +85,7 @@ public class LoginRepositoryTest{
         String lastName = "last";
         UserInfoDomain userInfoDomain = new UserInfoDomain(id, avatarUrl, firstName, lastName);
         mRepository.saveUserInfo(userInfoDomain);
+        verify(mDao).saveUser(any(UserEntity.class));
     }
 
     @Test
