@@ -4,10 +4,11 @@ import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.leventime.qualificationproject.base.di.app.AppComponent;
-import com.leventime.qualificationproject.base.di.app.AppModule;
-import com.leventime.qualificationproject.base.di.app.DaggerAppComponent;
-import com.leventime.qualificationproject.base.di.app.NetworkModule;
+import com.leventime.qualificationproject.base.di.ApiModule;
+import com.leventime.qualificationproject.base.di.AppComponent;
+import com.leventime.qualificationproject.base.di.AppModule;
+import com.leventime.qualificationproject.base.di.DaggerAppComponent;
+import com.leventime.qualificationproject.base.di.NetworkModule;
 
 import timber.log.Timber;
 
@@ -37,9 +38,20 @@ public class App extends Application{
         if(BuildConfig.DEBUG){
             Timber.plant(new Timber.DebugTree());
         }
-        mAppComponent = DaggerAppComponent.builder()
+        mAppComponent = buildAppComponent();
+    }
+
+    /**
+     * Build app component
+     *
+     * @return app component
+     */
+    @NonNull
+    protected AppComponent buildAppComponent(){
+        return DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .networkModule(new NetworkModule(BuildConfig.BASE_URL))
+                .apiModule(new ApiModule())
                 .build();
     }
 

@@ -1,4 +1,4 @@
-package com.leventime.qualificationproject.base.di.app;
+package com.leventime.qualificationproject.base.di;
 
 import android.app.Application;
 import android.content.Context;
@@ -17,6 +17,8 @@ import dagger.Provides;
 
 /**
  * Application-wide module
+ *
+ * @author kv
  */
 @Module
 public class AppModule{

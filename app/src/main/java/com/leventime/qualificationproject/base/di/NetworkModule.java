@@ -1,10 +1,9 @@
-package com.leventime.qualificationproject.base.di.app;
+package com.leventime.qualificationproject.base.di;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.leventime.qualificationproject.BuildConfig;
-import com.leventime.qualificationproject.api.AuthApi;
 import com.leventime.qualificationproject.base.network.ApiClient;
 import com.leventime.qualificationproject.base.network.exception.RxErrorHandlingCallAdapterFactory;
 
@@ -20,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Provides network environment dependencies
  *
- * @author ak
+ * @author kv
  */
 @Module(includes = {AppModule.class})
 public class NetworkModule{
@@ -75,12 +74,4 @@ public class NetworkModule{
     Cache httpCache(@NonNull Context aContext){
         return new Cache(aContext.getCacheDir(), HTTP_CACHE_SIZE_BYTES);
     }
-
-    @Provides
-    @Singleton
-    @NonNull
-    AuthApi loginApi(@NonNull ApiClient aClient){
-        return aClient.createApi(AuthApi.class);
-    }
-
 }

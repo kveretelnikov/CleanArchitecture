@@ -16,7 +16,7 @@ android {
         targetSdkVersion versions.targetSdk
         versionCode 1
         versionName "1.0." + versionCode
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.leventime.qualificationproject.util.runners.MockTestRunner"
         multiDexEnabled true
 
         javaCompileOptions {
@@ -88,6 +88,7 @@ dependencies {
     androidTestImplementation libraries.testRunner
     androidTestImplementation libraries.expressoCore
     androidTestImplementation libraries.archCoreTesting
+    implementation libraries.retrofitMock
 
     //Support
     implementation libraries.appcompatV7

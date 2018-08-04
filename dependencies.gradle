@@ -11,6 +11,7 @@ ext.versions = [
         testRunner         : '1.0.2',
         expresso           : '3.0.2',
         mockito            : '2.10.0',
+        retrofitMock       : '2.3.0',
 
         //Support
         supportLibrary     : '27.1.1',
@@ -59,6 +60,7 @@ ext.libraries = [
         expressoCore         : "com.android.support.test.espresso:espresso-core:$versions.expresso",
         mockito              : "org.mockito:mockito-core:$versions.mockito",
         archCoreTesting      : "android.arch.core:core-testing:$versions.archCore",
+        retrofitMock         : "com.squareup.retrofit2:retrofit-mock:$versions.retrofitMock",
 
         //UI
         constraintLayout     : "com.android.support.constraint:constraint-layout:$versions.constraintLayout",
