@@ -15,6 +15,18 @@ import com.leventime.qualificationproject.base.di.NetworkModule;
  */
 public class TestApp extends App{
 
+    private static TestApp sInstance;
+
+    public static App getInstance(){
+        return sInstance;
+    }
+
+    @Override
+    public void onCreate(){
+        super.onCreate();
+        sInstance = this;
+    }
+
     @NonNull
     @Override
     protected AppComponent buildAppComponent(){

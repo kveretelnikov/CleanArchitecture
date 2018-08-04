@@ -10,6 +10,10 @@ import org.junit.Before;
  */
 public class LoginActivityTest{
 
+    public static final String EMAIL = "username@username.ru";
+    public static final String PASSWORD = "username123";
+    public static final String PASSWORD_FAIL = "username";
+
     @Before
     public void setUp() throws Exception{
     }
