@@ -15,10 +15,10 @@ import com.leventime.qualificationproject.features.login.presentation.states.Log
 public interface LoginPresenter extends BasePresenter<LoginView>, LoginView.Actions, LoginOwner{
 
     /**
-     * Get state type
+     * Get state
      *
-     * @return state type
+     * @return state
      */
     @NonNull
-    LoginBaseState.LoginStateType getStateType();
+    LoginBaseState getState();
 }

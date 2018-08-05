@@ -19,7 +19,7 @@ public abstract class BaseStateImpl<VIEW extends BaseView, OWNER extends BaseOwn
     @NonNull
     @Override
     public String getName(){
-        return "BaseStateImpl";
+        return getClass().getName();
     }
 
     @Override

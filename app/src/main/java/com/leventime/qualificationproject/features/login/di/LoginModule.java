@@ -29,13 +29,13 @@ import dagger.Provides;
 @Module
 public class LoginModule{
 
-    private final LoginBaseState.LoginStateType mType;
+    private final LoginBaseState mState;
 
     /**
-     * @param aType current presenter state type
+     * @param aState current presenter state type
      */
-    public LoginModule(@NonNull LoginBaseState.LoginStateType aType){
-        mType = aType;
+    public LoginModule(@NonNull LoginBaseState aState){
+        mState = aState;
     }
 
     @NonNull
@@ -49,7 +49,7 @@ public class LoginModule{
     @LoginScope
     @Provides
     LoginPresenter providesPresenter(@NonNull LoginInteractor aInteractor, LoginValidator aValidator){
-        return new LoginPresenterImpl(aInteractor, aValidator, LoginBaseState.getState(mType));
+        return new LoginPresenterImpl(aInteractor, aValidator, mState);
     }
 
     @NonNull

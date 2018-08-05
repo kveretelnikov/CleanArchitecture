@@ -1,5 +1,7 @@
 package com.leventime.qualificationproject.features.login.presentation.states;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import com.leventime.qualificationproject.features.login.presentation.LoginView;
@@ -11,16 +13,24 @@ import com.leventime.qualificationproject.features.login.presentation.LoginView;
  */
 public class LoginProcessingState extends LoginBaseState{
 
-    @NonNull
-    @Override
-    public String getName(){
-        return getType().name();
+    /**
+     * Create {@link LoginProcessingState}
+     */
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator(){
+
+        public Parcelable createFromParcel(Parcel aIn){
+            return new LoginProcessingState(aIn);
+        }
+
+        public LoginProcessingState[] newArray(int size){
+            return new LoginProcessingState[size];
+        }
+    };
+
+    public LoginProcessingState(){
     }
 
-    @NonNull
-    @Override
-    public LoginStateType getType(){
-        return LoginStateType.PROCESSING;
+    private LoginProcessingState(final Parcel aParcel){
     }
 
     @Override
@@ -35,5 +45,21 @@ public class LoginProcessingState extends LoginBaseState{
         LoginOwner owner = getOwner();
         boolean hasErrors = owner.getLoginValidationErrors().hasErrors();
         owner.getView().setLoginEnabled(!hasErrors);
+    }
+
+    @NonNull
+    @Override
+    public String getName(){
+        return getClass().getName();
+    }
+
+    @Override
+    public int describeContents(){
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(final Parcel aParcel, final int aI){
+
     }
 }

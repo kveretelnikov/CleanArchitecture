@@ -22,6 +22,7 @@ import com.leventime.qualificationproject.base.core.presentation.BasePresenter;
 import com.leventime.qualificationproject.base.core.presentation.views.ProgressDialog;
 import com.leventime.qualificationproject.features.login.di.LoginModule;
 import com.leventime.qualificationproject.features.login.presentation.states.LoginBaseState;
+import com.leventime.qualificationproject.features.login.presentation.states.LoginInitState;
 import com.leventime.qualificationproject.features.main.presentation.MainActivity;
 import com.leventime.qualificationproject.util.Strings;
 import com.leventime.qualificationproject.util.Views;
@@ -80,11 +81,10 @@ public class LoginActivity extends BaseActivity implements LoginView{
     @Override
     protected void onCreate(@Nullable final Bundle aSavedInstanceState){
         super.onCreate(aSavedInstanceState);
-        LoginBaseState.LoginStateType loginStateType = aSavedInstanceState == null ? LoginBaseState.LoginStateType.INIT : LoginBaseState.LoginStateType.valueOf(
-                aSavedInstanceState.getString(EXTRA_STATE));
+        LoginBaseState state = aSavedInstanceState == null ? new LoginInitState() : (LoginBaseState) aSavedInstanceState.getParcelable(EXTRA_STATE);
         App.get(this).getAppComponent()
                 .loginComponentBuilder()
-                .loginModule(new LoginModule(loginStateType))
+                .loginModule(new LoginModule(state))
                 .build()
                 .inject(this);
         mPresenter.attachView(this);
@@ -95,7 +95,7 @@ public class LoginActivity extends BaseActivity implements LoginView{
     protected void onSaveInstanceState(final Bundle aOutState){
         aOutState.putCharSequence(EXTRA_EMAIL, mEtEmail.getText());
         aOutState.putCharSequence(EXTRA_PASSWORD, mEtPassword.getText());
-        aOutState.putString(EXTRA_STATE, mPresenter.getStateType().name());
+        aOutState.putParcelable(EXTRA_STATE, mPresenter.getState());
         super.onSaveInstanceState(aOutState);
     }
 

@@ -128,7 +128,7 @@ public class LoginPresenterImpl extends BasePresenterImpl<LoginView> implements 
 
     @NonNull
     @Override
-    public LoginBaseState.LoginStateType getStateType(){
-        return mState.getType();
+    public LoginBaseState getState(){
+        return mState;
     }
 }
