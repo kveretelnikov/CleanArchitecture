@@ -122,5 +122,6 @@ public class LoginPresenterImpl extends BasePresenterImpl<LoginView> implements 
         clearDisposables();
         mState.setOwner(this);
         mState.onEnter(getView());
+        mInteractor.setState(mState);
     }
 }
