@@ -8,6 +8,9 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
+import retrofit2.mock.BehaviorDelegate;
+import retrofit2.mock.MockRetrofit;
+import retrofit2.mock.NetworkBehavior;
 
 /**
  * Used to build api instances to use for network calls
@@ -16,6 +19,7 @@ public class ApiClient{
 
     private OkHttpClient.Builder mOkBuilder;
     private Retrofit.Builder mAdapterBuilder;
+    private final NetworkBehavior mNetworkBehavior = NetworkBehavior.create();
 
     public ApiClient(){
         createAdapterBuilder();
@@ -25,12 +29,28 @@ public class ApiClient{
      * Create api
      *
      * @param aApiClass api class
-     * @param <S> class mType
+     * @param <S> class type
      * @return api instance
      */
-    public <S> S createApi(Class<S> aApiClass){
+    @NonNull
+    public <S> S createApi(@NonNull Class<S> aApiClass){
         return mAdapterBuilder
                 .client(mOkBuilder.build())
+                .build()
+                .create(aApiClass);
+    }
+
+    /**
+     * Create mock api
+     *
+     * @param aApiClass api class
+     * @param <S> class type
+     * @return api instance
+     */
+    @NonNull
+    public <S> BehaviorDelegate<S> createMockApiDelegate(@NonNull Class<S> aApiClass){
+        return new MockRetrofit.Builder(mAdapterBuilder.build())
+                .networkBehavior(mNetworkBehavior)
                 .build()
                 .create(aApiClass);
     }
@@ -40,6 +60,7 @@ public class ApiClient{
      *
      * @return adapter builder
      */
+    @NonNull
     public Retrofit.Builder getAdapterBuilder(){
         return mAdapterBuilder;
     }

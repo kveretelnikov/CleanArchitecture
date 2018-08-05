@@ -1,4 +1,5 @@
 apply from: '../dependencies.gradle'
+apply from: '../code_quality_config/jacoco.gradle'
 
 apply plugin: 'com.android.application'
 
@@ -8,6 +9,8 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'jacoco'
+
 android {
     compileSdkVersion versions.compileSdk
     defaultConfig {
@@ -16,11 +19,27 @@ android {
         targetSdkVersion versions.targetSdk
         versionCode 1
         versionName "1.0." + versionCode
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.leventime.qualificationproject.util.runners.MockTestRunner"
         multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+
+        testOptions {
+            unitTests {
+                includeAndroidResources = true
+            }
+        }
     }
 
     buildTypes {
+        debug{
+            testCoverageEnabled true
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -32,12 +51,16 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
+    }
+
     flavorDimensions "app"
 
     productFlavors{
         prod{
             dimension "app"
-            buildConfigField "String", 'BASE_URL', '"volkdoe4.beget.tech/"'
+            buildConfigField "String", 'BASE_URL', '"http://volkdoe4.beget.tech/"'
             buildConfigField("long", "NETWORK_TIMEOUT_MILLIS", "10_000")
             buildConfigField("long", "CONNECT_TIMEOUT_MILLIS", "30_000")
             buildConfigField("int", "COUNT_RETRY_REQUEST", "3")
@@ -46,7 +69,7 @@ android {
         dev{
             dimension "app"
             versionNameSuffix "-dev"
-            buildConfigField "String", 'BASE_URL', '"volkdoe4.beget.tech/"'
+            buildConfigField "String", 'BASE_URL', '"http://volkdoe4.beget.tech/"'
             buildConfigField("long", "NETWORK_TIMEOUT_MILLIS", "10_000")
             buildConfigField("long", "CONNECT_TIMEOUT_MILLIS", "30_000")
             buildConfigField("int", "COUNT_RETRY_REQUEST", "3")
@@ -62,15 +85,28 @@ android {
     }
 }
 
+
+jacoco {
+    toolVersion = versions.jacoco
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation libraries.kotlinStdLib
+    implementation libraries.jacocoAgent
 
     //Tests
     testImplementation libraries.jUnit
+    testImplementation libraries.mockito
     androidTestImplementation libraries.testRunner
     androidTestImplementation libraries.expressoCore
-    androidTestImplementation libraries.mockito
+    androidTestImplementation libraries.archCoreTesting
+    implementation libraries.retrofitMock
+    implementation libraries.expressoIntents
 
     //Support
     implementation libraries.appcompatV7
@@ -106,4 +142,5 @@ dependencies {
     implementation libraries.butterknife
     kapt libraries.butterknifeCompiler
     implementation libraries.timber
+    implementation("com.google.guava:guava:22.0-android")
 }

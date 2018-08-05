@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.leventime.qualificationproject.base.core.BaseContract;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
@@ -20,7 +18,7 @@ import io.reactivex.disposables.Disposable;
  * Base screen, which contain logic of manage base view.
  * Add binding to views, contain rx subscription and base methods
  */
-public abstract class BaseFragment extends Fragment implements BaseContract.View{
+public abstract class BaseFragment extends Fragment implements BaseView{
 
     private final CompositeDisposable mDestroyCompositeDisposable = new CompositeDisposable();
     private final CompositeDisposable mStopCompositeDisposable = new CompositeDisposable();
@@ -63,7 +61,7 @@ public abstract class BaseFragment extends Fragment implements BaseContract.View
      * @return presenter
      */
     @Nullable
-    protected abstract BaseContract.Presenter getPresenter();
+    protected abstract BasePresenter getPresenter();
 
     /**
      * Add disposables to dispose in {@link Activity#onDestroy()}

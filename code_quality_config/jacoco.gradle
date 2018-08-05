@@ -1,0 +1,87 @@
+// Merge of
+// https://github.com/mgouline/android-samples/blob/master/jacoco/app/build.gradle
+// and https://github.com/pushtorefresh/storio/blob/master/gradle/jacoco-android.gradle
+
+// Requires Jacoco plugin in build classpath.
+apply plugin: 'jacoco'
+
+// Enables code coverage for JVM tests.
+// Android Gradle Plugin out of the box supports only code coverage for instrumentation tests.
+project.afterEvaluate{
+    // Grab all build types and product flavors
+    def buildTypes = android.buildTypes.collect{type -> type.name}
+    def productFlavors = android.productFlavors.collect{flavor -> flavor.name}
+
+    android.applicationVariants.all{variant ->
+
+        // D a different version code for each output APK
+        // other than the universal APK.
+        variant.outputs.each{output ->
+            println "Variants ${output}"
+            def variantName = variant.flavorName
+            def variantNameCap = variant.flavorName.capitalize()
+            def buildType = variant.buildType.name
+            def buildTypeCap = variant.buildType.name.capitalize()
+            def sourceName, sourcePath
+
+            sourcePath = "${variantName}/${buildType}"
+
+            println variant.getProperties().toString()
+
+
+
+            println output.getProperties().toString()
+            println output.getProperty("apkData").getProperties().toString()
+
+            def testTaskName = "test${variantNameCap}${buildTypeCap}"
+            def testTaskNameUnit = "test${variantNameCap}${buildTypeCap}UnitTest"
+            def coverageTaskName = "${testTaskName}Coverage"
+
+            println "buildTypeName ${variant.buildType.name}"
+
+//            sourceName =
+
+            // Create coverage task of form 'testFlavorTypeCoverage' depending on 'testFlavorTypeUnitTest'
+            task "${coverageTaskName}"(type: JacocoReport, dependsOn: "$testTaskNameUnit"){
+                group = 'Reporting'
+                description = "Generate Jacoco coverage reports for the build."
+
+                classDirectories = fileTree(
+                        dir: "${project.buildDir}/intermediates/classes/${sourcePath}",
+                        excludes: ['**/R.class',
+                                   '**/R$*.class',
+                                   '**/*$ViewInjector*.*',
+                                   '**/*$ViewBinder*.*',
+                                   '**/BuildConfig.*',
+                                   '**/Manifest*.*',
+                                   '**/*$Lambda$*.*', // Jacoco can not handle several "$" in class name.
+                                   '**/*$inlined$*.*', // Kotlin specific, Jacoco can not handle several "$" in class name.
+                                   '**/*Module.*', // Modules for Dagger.
+                                   '**/*Dagger*.*', // Dagger auto-generated code.
+                                   '**/*MembersInjector*.*', // Dagger auto-generated code.
+                                   '**/*_Provide*Factory*.*'] // Dagger auto-generated code.
+                )
+
+                def coverageSourceDirs = [
+                        'src/main/java'
+//                        "src/$productFlavorName/java", todo ??
+//                        "src/$buildTypeName/java" todo ??
+                ]
+
+                additionalSourceDirs = files(coverageSourceDirs)
+                sourceDirectories = files(coverageSourceDirs)
+                executionData = files("${project.buildDir}/jacoco/${testTaskNameUnit}.exec")
+//                destinationFile = file("${project.buildDir}/jacoco/jacocoTest.exec")
+                reports{
+                    xml.enabled = true
+                    html.enabled = true
+                }
+            }
+
+            build.dependsOn "${testTaskNameUnit}"
+
+        }
+    }
+
+}
+

@@ -13,6 +13,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import timber.log.Timber;
 
+import static com.leventime.qualificationproject.util.Constants.UNDEFINED_VALUE;
+
 /**
  * This class is necessary in order to obtain value object error, http error codes
  *
@@ -20,11 +22,14 @@ import timber.log.Timber;
  */
 public class RetrofitException extends RuntimeException{
 
+    @Nullable
     private final String mUrl;
     private final Kind mKind;
+    @Nullable
     private final transient Retrofit mRetrofit;
+    @Nullable
     private final String mErrorBody;
-    private final Integer mHttpCode;
+    private final int mHttpCode;
 
     /**
      * @param aMessage message
@@ -34,12 +39,12 @@ public class RetrofitException extends RuntimeException{
      * @param aException exception
      * @param aRetrofit retrofit instance
      */
-    public RetrofitException(@NonNull String aMessage,
-                             @Nullable String aUrl,
-                             @Nullable Response aResponse,
-                             @NonNull Kind aKind,
-                             @Nullable Throwable aException,
-                             @Nullable Retrofit aRetrofit){
+    RetrofitException(@NonNull String aMessage,
+                      @Nullable String aUrl,
+                      @Nullable Response aResponse,
+                      @NonNull Kind aKind,
+                      @Nullable Throwable aException,
+                      @Nullable Retrofit aRetrofit){
         super(aMessage, aException);
         this.mUrl = aUrl;
         String responseErrorBody = null;
@@ -51,7 +56,7 @@ public class RetrofitException extends RuntimeException{
             }
             mHttpCode = aResponse.raw().code();
         } else{
-            mHttpCode = null;
+            mHttpCode = UNDEFINED_VALUE;
         }
         mErrorBody = responseErrorBody;
         mKind = aKind;
@@ -88,30 +93,40 @@ public class RetrofitException extends RuntimeException{
     }
 
     /**
-     * The request URL which produced the error.
+     * The request Url which produced the error.
+     *
+     * @return url
      */
+    @Nullable
     public String getUrl(){
         return mUrl;
     }
 
     /**
+     * Get http code
+     *
      * @return http error code
      */
-    @Nullable
-    public Integer getHttpCode(){
+    public int getHttpCode(){
         return mHttpCode;
     }
 
     /**
-     * The event mKind which triggered this error.
+     * The event which triggered this error.
+     *
+     * @return event type
      */
+    @NonNull
     public Kind getKind(){
         return mKind;
     }
 
     /**
      * The Retrofit this request was executed on
+     *
+     * @return retrofit instance
      */
+    @Nullable
     public Retrofit getRetrofit(){
         return mRetrofit;
     }
@@ -128,7 +143,7 @@ public class RetrofitException extends RuntimeException{
         } else{
             body = getMessage();
         }
-        if(body == null){
+        if(body == null || mRetrofit == null){
             return null;
         }
         Converter<ResponseBody, T> converter = mRetrofit.responseBodyConverter(aType, new Annotation[0]);

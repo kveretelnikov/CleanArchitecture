@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin">4dp</dimen>
+    <dimen name="margin_2x">8dp</dimen>
+    <dimen name="margin_3x">12dp</dimen>
+    <dimen name="margin_4x">16dp</dimen>
+    <dimen name="margin_5x">20dp</dimen>
+    <dimen name="margin_6x">24dp</dimen>
+    <dimen name="empty_size">0dp</dimen>
+    <dimen name="all_window_padding_horizontal">@dimen/margin_4x</dimen>
+    <dimen name="all_window_padding_vertical">@dimen/margin_4x</dimen>
+    <dimen name="all_vg_padding_horizontal">@dimen/margin_2x</dimen>
+    <dimen name="all_vg_padding_vertical">@dimen/margin_2x</dimen>
+
+    <!--Text dimension-->
+    <dimen name="text_size_28">28sp</dimen>
+    <dimen name="text_size_24">24sp</dimen>
+    <dimen name="text_size_22">22sp</dimen>
+    <dimen name="text_size_20">20sp</dimen>
+    <dimen name="text_size_18">18sp</dimen>
+    <dimen name="text_size_16">16sp</dimen>
+    <dimen name="text_size_14">14sp</dimen>
+    <dimen name="text_size_12">12sp</dimen>
+    <dimen name="text_size_10">10sp</dimen>
+
+    <!--Toolbar-->
+    <dimen name="toolbar_height">60dp</dimen>
+    <dimen name="toolbar_shadow_size">4dp</dimen>
+    <dimen name="toolbar_text_size">@dimen/text_size_18</dimen>
+
+    <!--Progress-->
+    <dimen name="progress_window_width">250dp</dimen>
+    <dimen name="progress_window_height">80dp</dimen>
+    <dimen name="progress_padding">@dimen/margin_6x</dimen>
+    <dimen name="progress_name_padding_start">@dimen/margin_5x</dimen>
+</resources>

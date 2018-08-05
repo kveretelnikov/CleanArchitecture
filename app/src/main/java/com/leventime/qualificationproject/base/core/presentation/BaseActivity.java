@@ -9,8 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.leventime.qualificationproject.base.core.BaseContract;
-
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -19,7 +17,7 @@ import io.reactivex.disposables.Disposable;
  * Base screen, which contain logic of manage base view.
  * Add binding to views, contain rx subscription and base methods
  */
-public abstract class BaseActivity extends AppCompatActivity implements BaseContract.View{
+public abstract class BaseActivity extends AppCompatActivity implements BaseView{
 
     private final CompositeDisposable mDestroyCompositeDisposable = new CompositeDisposable();
     private final CompositeDisposable mStopCompositeDisposable = new CompositeDisposable();
@@ -34,7 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
     @Override
     protected void onDestroy(){
         mDestroyCompositeDisposable.clear();
-        BaseContract.Presenter presenter = getPresenter();
+        BasePresenter presenter = getPresenter();
         if(presenter != null){
             presenter.detachView();
         }
@@ -55,7 +53,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
     }
 
     /**
-     * Add disposables to dispose in {@link Activity#onStop()} ()}
+     * Add disposables to dispose in {@link Activity#onStop()}
      *
      * @param aDisposables disposables
      */
@@ -81,7 +79,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCont
      * @return presenter
      */
     @Nullable
-    protected abstract BaseContract.Presenter getPresenter();
+    protected abstract BasePresenter getPresenter();
 
     /**
      * Configure toolbar

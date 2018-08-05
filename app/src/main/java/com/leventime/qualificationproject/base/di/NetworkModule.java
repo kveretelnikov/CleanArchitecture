@@ -4,11 +4,9 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.leventime.qualificationproject.BuildConfig;
-import com.leventime.qualificationproject.base.network.Api;
 import com.leventime.qualificationproject.base.network.ApiClient;
 import com.leventime.qualificationproject.base.network.exception.RxErrorHandlingCallAdapterFactory;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -21,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Provides network environment dependencies
  *
- * @author ak
+ * @author kv
  */
 @Module(includes = {AppModule.class})
 public class NetworkModule{
@@ -42,7 +40,6 @@ public class NetworkModule{
     @NonNull
     @Singleton
     @Provides
-    @Named("apiClient")
     ApiClient providesApiClient(@NonNull Cache aCache){
         ApiClient apiClient = new ApiClient();
         OkHttpClient.Builder okBuilder = apiClient.getOkBuilder();
@@ -71,18 +68,10 @@ public class NetworkModule{
      * @param aContext application context
      * @return http cache
      */
+    @NonNull
     @Provides
     @Singleton
-    @NonNull
     Cache httpCache(@NonNull Context aContext){
         return new Cache(aContext.getCacheDir(), HTTP_CACHE_SIZE_BYTES);
     }
-
-    @Provides
-    @Singleton
-    @NonNull
-    Api api(@Named("apiClient") @NonNull ApiClient aClient){
-        return aClient.createApi(Api.class);
-    }
-
 }

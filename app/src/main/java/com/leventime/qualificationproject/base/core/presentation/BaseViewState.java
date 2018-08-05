@@ -19,12 +19,12 @@ public interface BaseViewState{
         /**
          * Show progress
          */
-        void showProgress();
+        void showLoadingProgress();
 
         /**
          * Hide progress
          */
-        void hideProgress();
+        void hideLoadingProgress();
     }
 
     /**
