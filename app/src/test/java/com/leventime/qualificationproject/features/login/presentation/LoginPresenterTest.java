@@ -48,7 +48,8 @@ public class LoginPresenterTest{
     @Before
     public void setUp(){
         when(mInteractor.getStringResource(anyInt())).thenReturn(ERROR_MESSAGE);
-        mPresenter = new LoginPresenterImpl(mInteractor, mValidator, new LoginInitState());
+        when(mInteractor.getState()).thenReturn(new LoginInitState());
+        mPresenter = new LoginPresenterImpl(mInteractor, mValidator);
         mPresenter.attachView(mView);
         reset(mView);
     }

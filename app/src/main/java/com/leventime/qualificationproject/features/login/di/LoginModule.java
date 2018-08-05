@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.leventime.qualificationproject.api.AuthApi;
 import com.leventime.qualificationproject.base.core.data.PreferenceManager;
 import com.leventime.qualificationproject.base.core.data.ResourceManager;
+import com.leventime.qualificationproject.base.core.presentation.Cache;
 import com.leventime.qualificationproject.base.core.presentation.Validator;
 import com.leventime.qualificationproject.base.room.AppDatabase;
 import com.leventime.qualificationproject.base.room.dao.UserDao;
@@ -15,7 +16,6 @@ import com.leventime.qualificationproject.features.login.domain.LoginInteractorI
 import com.leventime.qualificationproject.features.login.presentation.LoginPresenter;
 import com.leventime.qualificationproject.features.login.presentation.LoginPresenterImpl;
 import com.leventime.qualificationproject.features.login.presentation.LoginValidator;
-import com.leventime.qualificationproject.features.login.presentation.states.LoginBaseState;
 
 import dagger.Module;
 import dagger.Provides;
@@ -29,13 +29,13 @@ import dagger.Provides;
 @Module
 public class LoginModule{
 
-    private final LoginBaseState mState;
+    private final Cache mCache;
 
     /**
-     * @param aState current presenter state type
+     * @param aCache cache
      */
-    public LoginModule(@NonNull LoginBaseState aState){
-        mState = aState;
+    public LoginModule(@NonNull Cache aCache){
+        mCache = aCache;
     }
 
     @NonNull
@@ -49,14 +49,14 @@ public class LoginModule{
     @LoginScope
     @Provides
     LoginPresenter providesPresenter(@NonNull LoginInteractor aInteractor, LoginValidator aValidator){
-        return new LoginPresenterImpl(aInteractor, aValidator, mState);
+        return new LoginPresenterImpl(aInteractor, aValidator);
     }
 
     @NonNull
     @LoginScope
     @Provides
     LoginInteractor providesInteractor(@NonNull LoginRepository aRepository){
-        return new LoginInteractorImpl(aRepository);
+        return new LoginInteractorImpl(aRepository, mCache);
     }
 
     @NonNull

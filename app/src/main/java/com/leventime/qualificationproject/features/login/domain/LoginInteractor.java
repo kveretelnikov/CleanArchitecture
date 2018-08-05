@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.leventime.qualificationproject.base.core.domain.BaseInteractor;
+import com.leventime.qualificationproject.features.login.presentation.states.LoginBaseState;
 
 import io.reactivex.Completable;
 
@@ -43,4 +44,19 @@ public interface LoginInteractor extends BaseInteractor{
      */
     @NonNull
     Completable login();
+
+    /**
+     * Get current state
+     *
+     * @return state
+     */
+    @NonNull
+    LoginBaseState getState();
+
+    /**
+     * Set state
+     *
+     * @param aState state
+     */
+    void setState(@NonNull LoginBaseState aState);
 }

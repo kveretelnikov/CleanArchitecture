@@ -1,6 +1,8 @@
 package com.leventime.qualificationproject.features.login.domain;
 
+import com.leventime.qualificationproject.base.core.presentation.Cache;
 import com.leventime.qualificationproject.features.login.data.LoginRepository;
+import com.leventime.qualificationproject.features.login.presentation.states.LoginInitState;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,12 +29,14 @@ public class LoginInteractorTest{
 
     @Mock
     private LoginRepository mRepository;
+    @Mock
+    private Cache mCache;
 
     private LoginInteractor mInteractor;
 
     @Before
     public void setUp() throws Exception{
-        mInteractor = new LoginInteractorImpl(mRepository);
+        mInteractor = new LoginInteractorImpl(mRepository, mCache);
     }
 
     @Test
@@ -58,6 +62,27 @@ public class LoginInteractorTest{
         LoginDomain loginData = mInteractor.getLoginData();
         assertEquals(email, loginData.getEmail());
         assertEquals(password, loginData.getPassword());
+    }
+
+    @Test
+    public void getStateFromCache(){
+        when(mCache.getCacheData()).thenReturn(new LoginInitState());
+        when(mCache.isCacheExist()).thenReturn(true);
+        mInteractor.getState();
+        verify(mCache).getCacheData();
+    }
+
+    @Test
+    public void getState(){
+        when(mCache.isCacheExist()).thenReturn(false);
+        mInteractor.getState();
+        verify(mCache, never()).getCacheData();
+    }
+
+    @Test
+    public void setState(){
+        mInteractor.setState(new LoginInitState());
+        verify(mCache).saveCacheData(any(LoginInitState.class));
     }
 
     @Test

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -19,10 +20,9 @@ import com.leventime.qualificationproject.BuildConfig;
 import com.leventime.qualificationproject.R;
 import com.leventime.qualificationproject.base.core.presentation.BaseActivity;
 import com.leventime.qualificationproject.base.core.presentation.BasePresenter;
+import com.leventime.qualificationproject.base.core.presentation.CacheFragment;
 import com.leventime.qualificationproject.base.core.presentation.views.ProgressDialog;
 import com.leventime.qualificationproject.features.login.di.LoginModule;
-import com.leventime.qualificationproject.features.login.presentation.states.LoginBaseState;
-import com.leventime.qualificationproject.features.login.presentation.states.LoginInitState;
 import com.leventime.qualificationproject.features.main.presentation.MainActivity;
 import com.leventime.qualificationproject.util.Strings;
 import com.leventime.qualificationproject.util.Views;
@@ -61,9 +61,9 @@ public class LoginActivity extends BaseActivity implements LoginView{
     private Actions mListener;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout mCoordinatorLayout;
-    private static final String EXTRA_STATE = BuildConfig.APPLICATION_ID + ".EXTRA_STATE";
     private static final String EXTRA_EMAIL = BuildConfig.APPLICATION_ID + ".EXTRA_EMAIL";
     private static final String EXTRA_PASSWORD = BuildConfig.APPLICATION_ID + ".EXTRA_PASSWORD";
+    private static final String TAG_LOGIN_CACHE = "TAG_LOGIN_CACHE";
     @BindView(R.id.btnLogin)
     Button mBtnLogin;
 
@@ -81,21 +81,35 @@ public class LoginActivity extends BaseActivity implements LoginView{
     @Override
     protected void onCreate(@Nullable final Bundle aSavedInstanceState){
         super.onCreate(aSavedInstanceState);
-        LoginBaseState state = aSavedInstanceState == null ? new LoginInitState() : (LoginBaseState) aSavedInstanceState.getParcelable(EXTRA_STATE);
         App.get(this).getAppComponent()
                 .loginComponentBuilder()
-                .loginModule(new LoginModule(state))
+                .loginModule(new LoginModule(getCache()))
                 .build()
                 .inject(this);
         mPresenter.attachView(this);
         initViews(aSavedInstanceState);
     }
 
+    /**
+     * Get cache
+     *
+     * @return cache
+     */
+    @NonNull
+    private CacheFragment getCache(){
+        FragmentManager fm = getSupportFragmentManager();
+        CacheFragment cache = (CacheFragment) fm.findFragmentByTag(TAG_LOGIN_CACHE);
+        if(cache == null){
+            cache = CacheFragment.newInstance();
+            fm.beginTransaction().add(cache, TAG_LOGIN_CACHE).commit();
+        }
+        return cache;
+    }
+
     @Override
     protected void onSaveInstanceState(final Bundle aOutState){
         aOutState.putCharSequence(EXTRA_EMAIL, mEtEmail.getText());
         aOutState.putCharSequence(EXTRA_PASSWORD, mEtPassword.getText());
-        aOutState.putParcelable(EXTRA_STATE, mPresenter.getState());
         super.onSaveInstanceState(aOutState);
     }
 
