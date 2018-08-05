@@ -20,11 +20,11 @@ import static org.mockito.Mockito.when;
 public class LoginCompleteStateTest{
 
     @Mock
-    LoginView mView;
+    private LoginView mView;
     @Mock
-    LoginOwner mOwner;
+    private LoginOwner mOwner;
 
-    LoginCompleteState mState = new LoginCompleteState();
+    private LoginCompleteState mState = new LoginCompleteState();
 
     @Before
     public void setUp(){

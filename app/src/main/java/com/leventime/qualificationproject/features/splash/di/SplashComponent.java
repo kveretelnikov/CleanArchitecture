@@ -1,5 +1,7 @@
 package com.leventime.qualificationproject.features.splash.di;
 
+import android.support.annotation.NonNull;
+
 import com.leventime.qualificationproject.features.splash.presentation.SplashActivity;
 
 import dagger.Subcomponent;
@@ -13,7 +15,7 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {SplashModule.class})
 public interface SplashComponent{
 
-    void inject(SplashActivity aActivity);
+    void inject(@NonNull SplashActivity aActivity);
 
     /**
      * Splash component builder
@@ -21,8 +23,10 @@ public interface SplashComponent{
     @Subcomponent.Builder
     interface Builder{
 
-        Builder splashModule(SplashModule aModule);
+        @NonNull
+        Builder splashModule(@NonNull SplashModule aModule);
 
+        @NonNull
         SplashComponent build();
     }
 }

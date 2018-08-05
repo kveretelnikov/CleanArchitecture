@@ -22,11 +22,11 @@ import static org.mockito.Mockito.when;
 public class LoginProcessingStateTest{
 
     @Mock
-    LoginView mView;
+    private LoginView mView;
     @Mock
-    LoginOwner mOwner;
+    private LoginOwner mOwner;
 
-    LoginProcessingState mState = new LoginProcessingState();
+    private LoginProcessingState mState = new LoginProcessingState();
 
     @Before
     public void setUp(){

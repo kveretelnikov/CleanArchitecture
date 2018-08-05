@@ -8,6 +8,8 @@ import com.leventime.qualificationproject.base.core.presentation.BaseView;
 /**
  * Describe base owner
  *
+ * @param <VIEW> view
+ * @param <STATE> state
  * @author kv
  */
 public interface BaseOwner<VIEW extends BaseView, STATE extends BaseState> extends BasePresenter<VIEW>{

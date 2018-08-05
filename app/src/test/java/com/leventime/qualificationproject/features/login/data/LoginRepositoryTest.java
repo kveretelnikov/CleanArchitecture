@@ -30,13 +30,13 @@ import static org.mockito.Mockito.when;
 public class LoginRepositoryTest{
 
     @Mock
-    ResourceManagerImpl mResourceManager;
+    private ResourceManagerImpl mResourceManager;
     @Mock
-    PreferenceManagerImpl mPreferenceManager;
+    private PreferenceManagerImpl mPreferenceManager;
     @Mock
-    AuthApi mApi;
+    private AuthApi mApi;
     @Mock
-    UserDao mDao;
+    private UserDao mDao;
 
     private LoginRepositoryImpl mRepository;
 

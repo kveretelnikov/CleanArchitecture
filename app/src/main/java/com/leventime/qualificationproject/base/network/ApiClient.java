@@ -29,10 +29,11 @@ public class ApiClient{
      * Create api
      *
      * @param aApiClass api class
-     * @param <S> class mType
+     * @param <S> class type
      * @return api instance
      */
-    public <S> S createApi(Class<S> aApiClass){
+    @NonNull
+    public <S> S createApi(@NonNull Class<S> aApiClass){
         return mAdapterBuilder
                 .client(mOkBuilder.build())
                 .build()
@@ -43,10 +44,11 @@ public class ApiClient{
      * Create mock api
      *
      * @param aApiClass api class
-     * @param <S> class mType
+     * @param <S> class type
      * @return api instance
      */
-    public <S> BehaviorDelegate<S> createMockApiDelegate(Class<S> aApiClass){
+    @NonNull
+    public <S> BehaviorDelegate<S> createMockApiDelegate(@NonNull Class<S> aApiClass){
         return new MockRetrofit.Builder(mAdapterBuilder.build())
                 .networkBehavior(mNetworkBehavior)
                 .build()
@@ -58,6 +60,7 @@ public class ApiClient{
      *
      * @return adapter builder
      */
+    @NonNull
     public Retrofit.Builder getAdapterBuilder(){
         return mAdapterBuilder;
     }

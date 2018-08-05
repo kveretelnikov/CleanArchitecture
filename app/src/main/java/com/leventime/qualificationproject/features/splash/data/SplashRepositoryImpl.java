@@ -23,6 +23,7 @@ public class SplashRepositoryImpl implements SplashRepository{
         mPreferenceManager = aPreferenceManager;
     }
 
+    @NonNull
     @Override
     public Single<Boolean> isUserLogged(){
         return Single.fromCallable(() -> !Strings.isNullOrEmpty(mPreferenceManager.getToken()));

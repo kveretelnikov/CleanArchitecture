@@ -15,7 +15,7 @@ import io.reactivex.Completable;
  */
 public class LoginInteractorImpl extends BaseInteractorImpl<LoginRepository> implements LoginInteractor{
 
-    LoginDomain mLoginDomain = new LoginDomain();
+    private LoginDomain mLoginDomain = new LoginDomain();
 
     /**
      * @param aRepository repository

@@ -22,9 +22,9 @@ import static org.mockito.Mockito.when;
 public class SplashInteractorTest{
 
     @Mock
-    SplashRepository mRepository;
+    private SplashRepository mRepository;
 
-    SplashInteractorImpl mInteractor;
+    private SplashInteractorImpl mInteractor;
 
     @Before
     public void setUp() throws Exception{

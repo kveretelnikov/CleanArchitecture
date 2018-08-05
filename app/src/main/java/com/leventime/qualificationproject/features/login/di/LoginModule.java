@@ -38,37 +38,37 @@ public class LoginModule{
         mType = aType;
     }
 
+    @NonNull
     @LoginScope
     @Provides
-    @NonNull
     LoginValidator providesValidator(){
         return new Validator();
     }
 
+    @NonNull
     @LoginScope
     @Provides
-    @NonNull
-    LoginPresenter providesPresenter(@NonNull LoginInteractor aInteractor, @NonNull LoginValidator aValidator){
+    LoginPresenter providesPresenter(@NonNull LoginInteractor aInteractor, LoginValidator aValidator){
         return new LoginPresenterImpl(aInteractor, aValidator, LoginBaseState.getState(mType));
     }
 
+    @NonNull
     @LoginScope
     @Provides
-    @NonNull
     LoginInteractor providesInteractor(@NonNull LoginRepository aRepository){
         return new LoginInteractorImpl(aRepository);
     }
 
+    @NonNull
     @LoginScope
     @Provides
-    @NonNull
     UserDao providesUserDao(@NonNull AppDatabase aAppDatabase){
         return aAppDatabase.userDao();
     }
 
+    @NonNull
     @LoginScope
     @Provides
-    @NonNull
     LoginRepository providesRepository(@NonNull ResourceManager aResourceManager, @NonNull PreferenceManager aPreferenceManager, @NonNull AuthApi aApi, @NonNull UserDao aUserDao){
         return new LoginRepositoryImpl(aResourceManager, aPreferenceManager, aApi, aUserDao);
     }

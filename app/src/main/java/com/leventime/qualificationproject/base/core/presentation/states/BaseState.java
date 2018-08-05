@@ -8,9 +8,19 @@ import com.leventime.qualificationproject.base.core.presentation.BaseView;
  *
  * Describe base state
  *
+ * @param <VIEW> view
+ * @param <OWNER> owner
  * @author kv
  */
 public interface BaseState<VIEW extends BaseView, OWNER extends BaseOwner>{
+
+    /**
+     * Get name
+     *
+     * @return name
+     */
+    @NonNull
+    String getName();
 
     /**
      * Enter to state

@@ -34,6 +34,7 @@ public class LoginPresenterImpl extends BasePresenterImpl<LoginView> implements 
     /**
      * @param aInteractor interactor
      * @param aLoginValidator login validator
+     * @param aState current state
      */
     public LoginPresenterImpl(@NonNull LoginInteractor aInteractor,
                               @NonNull LoginValidator aLoginValidator,

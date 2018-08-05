@@ -8,6 +8,7 @@ import io.reactivex.disposables.Disposable;
 /**
  * Manage base view, subscriptions
  *
+ * @param <VIEW> view
  * @author kv
  */
 public class BasePresenterImpl<VIEW extends BaseView> implements BasePresenter<VIEW>{

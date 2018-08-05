@@ -1,5 +1,7 @@
 package com.leventime.qualificationproject.features.login.di;
 
+import android.support.annotation.NonNull;
+
 import com.leventime.qualificationproject.features.login.presentation.LoginActivity;
 
 import dagger.Subcomponent;
@@ -13,7 +15,7 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {LoginModule.class})
 public interface LoginComponent{
 
-    void inject(LoginActivity aActivity);
+    void inject(@NonNull LoginActivity aActivity);
 
     /**
      * Login component builder
@@ -21,8 +23,10 @@ public interface LoginComponent{
     @Subcomponent.Builder
     interface Builder{
 
-        Builder loginModule(LoginModule aModule);
+        @NonNull
+        Builder loginModule(@NonNull LoginModule aModule);
 
+        @NonNull
         LoginComponent build();
     }
 }

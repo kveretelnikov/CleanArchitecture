@@ -26,9 +26,9 @@ import static org.mockito.Mockito.when;
 public class LoginInteractorTest{
 
     @Mock
-    LoginRepository mRepository;
+    private LoginRepository mRepository;
 
-    LoginInteractor mInteractor;
+    private LoginInteractor mInteractor;
 
     @Before
     public void setUp() throws Exception{

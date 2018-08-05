@@ -16,35 +16,41 @@ public abstract class BaseStateImpl<VIEW extends BaseView, OWNER extends BaseOwn
 
     private OWNER mOwner;
 
+    @NonNull
+    @Override
+    public String getName(){
+        return "BaseStateImpl";
+    }
+
     @Override
     public void onEnter(@NonNull final VIEW aView){
-        Timber.d("onEnter");
+        Timber.d( getName()+" onEnter");
         //depend from realization
     }
 
     @Override
     public void onExit(){
-        Timber.d("onExit");
+        Timber.d(getName()+" onExit");
         //depend from realization
     }
 
     @Override
     public void forward(){
-        Timber.d("forward");
+        Timber.d(getName()+" forward");
         onExit();
         //depend from realization
     }
 
     @Override
     public void back(){
-        Timber.d("back");
+        Timber.d(getName()+" back");
         onExit();
         //depend from realization
     }
 
     @Override
     public void invalidateView(@NonNull final VIEW aView){
-        Timber.d("invalidateView");
+        Timber.d(getName()+" invalidateView");
         //depend from realization
     }
 

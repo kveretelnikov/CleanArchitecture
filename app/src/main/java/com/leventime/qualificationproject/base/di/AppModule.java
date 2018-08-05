@@ -29,33 +29,38 @@ public class AppModule{
         this.mApplication = aApplication;
     }
 
+    @NonNull
     @Provides
     @Singleton
     Application providesApplication(){
         return mApplication;
     }
 
+    @NonNull
     @Provides
     @Singleton
     Context providesContext(){
         return mApplication;
     }
 
+    @NonNull
     @Provides
     @Singleton
     PreferenceManager providesPreferenceManager(@NonNull Context aContext){
         return new PreferenceManagerImpl(aContext);
     }
 
+    @NonNull
     @Provides
     @Singleton
     ResourceManager providesResourceManager(@NonNull Context aContext){
         return new ResourceManagerImpl(aContext);
     }
 
+    @NonNull
     @Provides
     @Singleton
-    AppDatabase providesAppDatabe(@NonNull Context aContext){
+    AppDatabase providesAppDatabase(@NonNull Context aContext){
         return AppDatabase.build(aContext);
     }
 }

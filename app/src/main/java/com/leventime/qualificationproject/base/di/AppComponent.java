@@ -1,5 +1,7 @@
 package com.leventime.qualificationproject.base.di;
 
+import android.support.annotation.NonNull;
+
 import com.leventime.qualificationproject.App;
 import com.leventime.qualificationproject.features.login.di.LoginComponent;
 import com.leventime.qualificationproject.features.splash.di.SplashComponent;
@@ -15,9 +17,11 @@ import dagger.Component;
 @Component(modules = {AppModule.class, NetworkModule.class, ApiModule.class})
 public interface AppComponent{
 
+    @NonNull
     LoginComponent.Builder loginComponentBuilder();
 
+    @NonNull
     SplashComponent.Builder splashComponentBuilder();
 
-    void inject(App aApp);
+    void inject(@NonNull App aApp);
 }

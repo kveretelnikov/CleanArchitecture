@@ -30,5 +30,6 @@ public abstract class AppDatabase extends RoomDatabase{
                 .build();
     }
 
+    @NonNull
     public abstract UserDao userDao();
 }

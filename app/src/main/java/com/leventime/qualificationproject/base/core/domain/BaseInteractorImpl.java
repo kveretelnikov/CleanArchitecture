@@ -1,12 +1,14 @@
 package com.leventime.qualificationproject.base.core.domain;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import com.leventime.qualificationproject.base.core.data.BaseRepository;
 
 /**
  * Provide base data
  *
+ * @param <REPOSITORY> repository
  * @author kv
  */
 public class BaseInteractorImpl<REPOSITORY extends BaseRepository> implements BaseInteractor{
@@ -20,8 +22,9 @@ public class BaseInteractorImpl<REPOSITORY extends BaseRepository> implements Ba
         mRepository = aRepository;
     }
 
+    @NonNull
     @Override
-    public String getStringResource(final int aResourceId, @NonNull final Object... aFormatArgs){
+    public String getStringResource(final int aResourceId, @Nullable final Object... aFormatArgs){
         return mRepository.getStringResource(aResourceId, aFormatArgs);
     }
 }

@@ -22,23 +22,23 @@ import dagger.Provides;
 @Module
 public class SplashModule{
 
+    @NonNull
     @SplashScope
     @Provides
-    @NonNull
     SplashPresenter providesPresenter(@NonNull SplashInteractor aInteractor){
         return new SplashPresenterImpl(aInteractor);
     }
 
+    @NonNull
     @SplashScope
     @Provides
-    @NonNull
     SplashInteractor providesInteractor(@NonNull SplashRepository aRepository){
         return new SplashInteractorImpl(aRepository);
     }
 
+    @NonNull
     @SplashScope
     @Provides
-    @NonNull
     SplashRepository providesRepository(@NonNull PreferenceManager aPreferenceManager){
         return new SplashRepositoryImpl(aPreferenceManager);
     }

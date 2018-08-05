@@ -49,7 +49,7 @@ public final class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory
         private final Retrofit retrofit;
         private final CallAdapter<R, Object> wrapped;
 
-        public RxCallAdapterWrapper(@NonNull Retrofit retrofit, @NonNull CallAdapter<R, Object> wrapped){
+        RxCallAdapterWrapper(@NonNull Retrofit retrofit, @NonNull CallAdapter<R, Object> wrapped){
             this.retrofit = retrofit;
             this.wrapped = wrapped;
         }
@@ -78,6 +78,12 @@ public final class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory
             return result;
         }
 
+        /**
+         * Create exception with type {@link RetrofitException} from {@link Throwable}
+         *
+         * @param throwable error
+         * @return {@link RetrofitException}
+         */
         @NonNull
         private RetrofitException asRetrofitException(@NonNull Throwable throwable){
             Timber.d("asRetrofitException");

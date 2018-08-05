@@ -18,9 +18,9 @@ import dagger.Provides;
 @Module
 public class ApiModule{
 
+    @NonNull
     @Provides
     @Singleton
-    @NonNull
     AuthApi loginApi(@NonNull ApiClient aClient){
         return aClient.createApi(AuthApi.class);
     }

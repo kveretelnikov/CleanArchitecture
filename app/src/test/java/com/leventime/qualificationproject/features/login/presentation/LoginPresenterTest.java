@@ -39,9 +39,9 @@ public class LoginPresenterTest{
     @Rule
     public final RxSchedulerRule mOverrideSchedulersRule = new RxSchedulerRule();
     @Mock
-    LoginView mView;
+    private LoginView mView;
     @Mock
-    LoginInteractor mInteractor;
+    private LoginInteractor mInteractor;
     private final LoginValidator mValidator = new Validator();
     private LoginPresenterImpl mPresenter;
 

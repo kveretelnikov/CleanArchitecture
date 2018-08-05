@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 /**
  * Describe login response data
  *
+ * @param token
  * @author kv
  */
 class LoginResponseEntity(

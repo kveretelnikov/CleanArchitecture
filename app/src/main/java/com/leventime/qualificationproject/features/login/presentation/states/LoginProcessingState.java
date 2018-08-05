@@ -13,6 +13,12 @@ public class LoginProcessingState extends LoginBaseState{
 
     @NonNull
     @Override
+    public String getName(){
+        return getType().name();
+    }
+
+    @NonNull
+    @Override
     public LoginStateType getType(){
         return LoginStateType.PROCESSING;
     }

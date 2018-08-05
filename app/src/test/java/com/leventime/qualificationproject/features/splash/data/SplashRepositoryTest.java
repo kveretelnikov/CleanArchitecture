@@ -19,9 +19,9 @@ import static org.mockito.Mockito.verify;
 public class SplashRepositoryTest{
 
     @Mock
-    PreferenceManagerImpl mPreferenceManager;
+    private PreferenceManagerImpl mPreferenceManager;
 
-    SplashRepositoryImpl mRepository;
+    private SplashRepositoryImpl mRepository;
 
     @Before
     public void setUp() throws Exception{

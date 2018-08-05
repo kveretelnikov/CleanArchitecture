@@ -13,6 +13,12 @@ public class LoginCompleteState extends LoginBaseState{
 
     @NonNull
     @Override
+    public String getName(){
+        return getType().name();
+    }
+
+    @NonNull
+    @Override
     public LoginStateType getType(){
         return LoginStateType.COMPLETE;
     }

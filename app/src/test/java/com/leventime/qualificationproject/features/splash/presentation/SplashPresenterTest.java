@@ -30,11 +30,11 @@ public class SplashPresenterTest{
     public final RxSchedulerRule mOverrideSchedulersRule = new RxSchedulerRule();
 
     @Mock
-    SplashView mView;
+    private SplashView mView;
     @Mock
-    SplashInteractor mInteractor;
+    private SplashInteractor mInteractor;
 
-    SplashPresenterImpl mPresenter;
+    private SplashPresenterImpl mPresenter;
 
     @Before
     public void setUp(){

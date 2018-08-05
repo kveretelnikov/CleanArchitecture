@@ -24,12 +24,6 @@ public class ResourceManagerImpl implements ResourceManager{
         mContext = aContext;
     }
 
-    /**
-     * Get string by android resource id
-     *
-     * @param aResourceId resource id
-     * @return string
-     */
     @NonNull
     @Override
     public String getStringResource(@StringRes int aResourceId, @Nullable Object... aFormatArgs){

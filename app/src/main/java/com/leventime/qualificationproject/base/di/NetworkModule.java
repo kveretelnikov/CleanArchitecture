@@ -68,9 +68,9 @@ public class NetworkModule{
      * @param aContext application context
      * @return http cache
      */
+    @NonNull
     @Provides
     @Singleton
-    @NonNull
     Cache httpCache(@NonNull Context aContext){
         return new Cache(aContext.getCacheDir(), HTTP_CACHE_SIZE_BYTES);
     }

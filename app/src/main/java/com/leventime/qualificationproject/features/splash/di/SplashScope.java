@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import javax.inject.Scope;
 
 /**
- * Login scope
+ * Splash scope
  *
  * @author kv
  */

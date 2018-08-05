@@ -39,12 +39,12 @@ public class RetrofitException extends RuntimeException{
      * @param aException exception
      * @param aRetrofit retrofit instance
      */
-    public RetrofitException(@NonNull String aMessage,
-                             @Nullable String aUrl,
-                             @Nullable Response aResponse,
-                             @NonNull Kind aKind,
-                             @Nullable Throwable aException,
-                             @Nullable Retrofit aRetrofit){
+    RetrofitException(@NonNull String aMessage,
+                      @Nullable String aUrl,
+                      @Nullable Response aResponse,
+                      @NonNull Kind aKind,
+                      @Nullable Throwable aException,
+                      @Nullable Retrofit aRetrofit){
         super(aMessage, aException);
         this.mUrl = aUrl;
         String responseErrorBody = null;
@@ -143,7 +143,7 @@ public class RetrofitException extends RuntimeException{
         } else{
             body = getMessage();
         }
-        if(body == null){
+        if(body == null || mRetrofit == null){
             return null;
         }
         Converter<ResponseBody, T> converter = mRetrofit.responseBodyConverter(aType, new Annotation[0]);

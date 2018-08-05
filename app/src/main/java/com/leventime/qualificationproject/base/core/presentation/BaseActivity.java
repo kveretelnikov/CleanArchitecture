@@ -53,7 +53,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
     /**
-     * Add disposables to dispose in {@link Activity#onStop()} ()}
+     * Add disposables to dispose in {@link Activity#onStop()}
      *
      * @param aDisposables disposables
      */
