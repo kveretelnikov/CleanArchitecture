@@ -1,5 +1,6 @@
 package com.leventime.qualificationproject.base.core.presentation.states;
 
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import com.leventime.qualificationproject.base.core.presentation.BaseView;
@@ -12,7 +13,7 @@ import com.leventime.qualificationproject.base.core.presentation.BaseView;
  * @param <OWNER> owner
  * @author kv
  */
-public interface BaseState<VIEW extends BaseView, OWNER extends BaseOwner>{
+public interface BaseState<VIEW extends BaseView, OWNER extends BaseOwner> extends Parcelable{
 
     /**
      * Get name

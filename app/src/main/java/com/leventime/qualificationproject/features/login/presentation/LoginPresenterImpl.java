@@ -34,15 +34,13 @@ public class LoginPresenterImpl extends BasePresenterImpl<LoginView> implements 
     /**
      * @param aInteractor interactor
      * @param aLoginValidator login validator
-     * @param aState current state
      */
     public LoginPresenterImpl(@NonNull LoginInteractor aInteractor,
-                              @NonNull LoginValidator aLoginValidator,
-                              @NonNull LoginBaseState aState){
+                              @NonNull LoginValidator aLoginValidator){
         super(LoginView.EMPTY);
         mInteractor = aInteractor;
         mLoginValidator = aLoginValidator;
-        mState = aState;
+        mState = mInteractor.getState();
         mState.setOwner(this);
     }
 
@@ -124,11 +122,6 @@ public class LoginPresenterImpl extends BasePresenterImpl<LoginView> implements 
         clearDisposables();
         mState.setOwner(this);
         mState.onEnter(getView());
-    }
-
-    @NonNull
-    @Override
-    public LoginBaseState.LoginStateType getStateType(){
-        return mState.getType();
+        mInteractor.setState(mState);
     }
 }
